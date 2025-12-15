@@ -1,0 +1,63 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to nexus-vector
+        uses: appleboy/ssh-action@master
+        with:
+          host: nexus-vector
+          username: admin
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /srv/containers/daemon
+            
+            echo "📥 Pulling latest code..."
+            git pull origin master
+            
+            echo "🔨 Rebuilding containers..."
+            docker compose build --no-cache
+            
+            echo "🚀 Restarting services..."
+            docker compose up -d
+            
+            echo "⏳ Waiting for services to start..."
+            sleep 10
+            
+            echo "🏥 Health check..."
+            # Check backend health
+            if curl -sf http://localhost:3000/health > /dev/null 2>&1; then
+              echo "✅ Backend is healthy"
+            else
+              echo "⚠️ Backend health check failed (may not have /health endpoint)"
+            fi
+            
+            # Check frontend is serving
+            if curl -sf http://localhost:80 > /dev/null 2>&1; then
+              echo "✅ Frontend is serving"
+            else
+              echo "⚠️ Frontend check failed"
+            fi
+            
+            echo ""
+            echo "📊 Container status:"
+            docker compose ps
+            
+            echo ""
+            echo "✅ Deployment complete!"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Deployment to nexus-vector failed"
+          echo "Check the Forgejo Actions logs for details"

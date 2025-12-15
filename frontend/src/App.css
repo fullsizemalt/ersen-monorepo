@@ -1,0 +1,57 @@
+/* Aurora / Mesh Gradient Animations */
+@keyframes aurora-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+}
+
+@keyframes aurora-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-20px, 10px) scale(0.9);
+  }
+}
+
+@keyframes aurora-3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(10px, 20px) scale(1.05);
+  }
+}
+
+.animate-aurora-1 {
+  animation: aurora-1 10s infinite ease-in-out;
+}
+
+.animate-aurora-2 {
+  animation: aurora-2 15s infinite ease-in-out reverse;
+}
+
+.animate-aurora-3 {
+  animation: aurora-3 12s infinite ease-in-out;
+}
+
+/* Glassmorphism Card Utility */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}

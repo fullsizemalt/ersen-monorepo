@@ -1,0 +1,14 @@
+# Override file - extends docker-compose.yml
+# Only add additional config, don't duplicate labels
+
+services:
+  frontend:
+    networks:
+      - traefik-public
+      - daemon-network
+
+networks:
+  traefik-public:
+    external: true
+  daemon-network:
+    driver: bridge

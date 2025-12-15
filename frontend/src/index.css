@@ -1,0 +1,507 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    /* 
+     * Light Theme
+     * - High contrast for readability
+     * - Warm whites to reduce eye strain
+     * - Clear visual hierarchy
+     */
+    :root {
+        --background: 0 0% 99%;
+        --foreground: 224 14% 10%;
+
+        --card: 0 0% 100%;
+        --card-foreground: 224 14% 10%;
+
+        --popover: 0 0% 100%;
+        --popover-foreground: 224 14% 10%;
+
+        --primary: 221 83% 53%;
+        --primary-foreground: 0 0% 100%;
+
+        --secondary: 220 14% 96%;
+        --secondary-foreground: 224 14% 10%;
+
+        --muted: 220 14% 96%;
+        --muted-foreground: 220 9% 46%;
+
+        --accent: 221 83% 53%;
+        --accent-foreground: 0 0% 100%;
+
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+
+        --border: 220 13% 91%;
+        --input: 220 13% 91%;
+        --ring: 221 83% 53%;
+
+        --radius: 0.625rem;
+
+        /* Semantic colors for light mode */
+        --success: 142 76% 36%;
+        --warning: 38 92% 50%;
+        --info: 199 89% 48%;
+    }
+
+    /* 
+     * Dark Theme
+     * - Reduced brightness for comfort
+     * - Proper contrast ratios (WCAG AA)
+     * - Subtle depth with layered backgrounds
+     */
+    .dark {
+        --background: 224 14% 4%;
+        --foreground: 0 0% 95%;
+
+        --card: 224 14% 6%;
+        --card-foreground: 0 0% 95%;
+
+        --popover: 224 14% 6%;
+        --popover-foreground: 0 0% 95%;
+
+        --primary: 221 83% 53%;
+        --primary-foreground: 0 0% 100%;
+
+        --secondary: 224 14% 12%;
+        --secondary-foreground: 0 0% 95%;
+
+        --muted: 224 14% 12%;
+        --muted-foreground: 220 9% 60%;
+
+        --accent: 221 83% 53%;
+        --accent-foreground: 0 0% 100%;
+
+        --destructive: 0 62% 30%;
+        --destructive-foreground: 0 0% 95%;
+
+        --border: 224 14% 14%;
+        --input: 224 14% 14%;
+        --ring: 221 83% 53%;
+
+        /* Semantic colors for dark mode */
+        --success: 142 71% 45%;
+        --warning: 38 92% 50%;
+        --info: 199 89% 48%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    html {
+        /* Smooth color transitions when switching themes */
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-feature-settings: "rlig" 1, "calt" 1;
+
+        /* Comfortable line height for reading */
+        line-height: 1.6;
+
+        /* Better text rendering */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Improved focus styles for accessibility */
+    :focus-visible {
+        @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+    }
+
+    /* Selection colors */
+    ::selection {
+        @apply bg-primary/20 text-foreground;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-border rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-muted-foreground/30;
+    }
+}
+
+/* Typography scale with proper spacing */
+@layer base {
+    h1 {
+        @apply text-4xl font-bold tracking-tight leading-tight;
+        margin-bottom: 0.5em;
+    }
+
+    h2 {
+        @apply text-3xl font-semibold tracking-tight leading-tight;
+        margin-bottom: 0.5em;
+    }
+
+    h3 {
+        @apply text-2xl font-semibold leading-snug;
+        margin-bottom: 0.4em;
+    }
+
+    h4 {
+        @apply text-xl font-medium leading-snug;
+        margin-bottom: 0.4em;
+    }
+
+    p {
+        @apply leading-relaxed;
+        margin-bottom: 1em;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Utility classes */
+@layer utilities {
+
+    /* Glass morphism - works in both themes */
+    .glass {
+        @apply backdrop-blur-xl border;
+        background: hsl(var(--background) / 0.7);
+        border-color: hsl(var(--border) / 0.5);
+    }
+
+    .glass-card {
+        @apply backdrop-blur-lg border transition-colors duration-300;
+        /* Higher opacity for better legibility, especially in light mode */
+        background: hsl(var(--card) / 0.9);
+        border-color: hsl(var(--border) / 0.8);
+    }
+
+    .glass-card:hover {
+        border-color: hsl(var(--border) / 0.5);
+    }
+
+    /* Text gradient */
+    .text-gradient {
+        @apply bg-clip-text text-transparent;
+        background-image: linear-gradient(to bottom,
+                hsl(var(--foreground)),
+                hsl(var(--foreground) / 0.7));
+    }
+
+    /* Glow effect */
+    .glow {
+        box-shadow: 0 0 20px -8px hsl(var(--primary) / 0.3);
+    }
+
+    /* Card with elevation */
+    .card-elevated {
+        @apply bg-card rounded-xl border border-border;
+        box-shadow:
+            0 1px 2px hsl(var(--foreground) / 0.05),
+            0 4px 12px hsl(var(--foreground) / 0.05);
+    }
+
+    /* Proper spacing utilities */
+    .section-spacing {
+        @apply py-8 md:py-12 lg:py-16;
+    }
+
+    .content-spacing {
+        @apply space-y-4 md:space-y-6;
+    }
+
+    /* Readable container width */
+    .readable-width {
+        max-width: 65ch;
+    }
+}
+
+/* Background Pattern - theme aware */
+.bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right,
+            hsl(var(--border) / 0.3) 1px,
+            transparent 1px),
+        linear-gradient(to bottom,
+            hsl(var(--border) / 0.3) 1px,
+            transparent 1px);
+    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+}
+
+/* Aurora animation (keep for login page) */
+@keyframes aurora-1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(10%, 5%) scale(1.1);
+    }
+}
+
+@keyframes aurora-2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-10%, -5%) scale(1.1);
+    }
+}
+
+@keyframes aurora-3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(5%, -10%) scale(1.05);
+    }
+}
+
+.animate-aurora-1 {
+    animation: aurora-1 15s ease-in-out infinite;
+}
+
+.animate-aurora-2 {
+    animation: aurora-2 18s ease-in-out infinite;
+}
+
+.animate-aurora-3 {
+    animation: aurora-3 20s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LINEAR-STYLE MICRO ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Smooth fade-in */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+}
+
+/* Slide up with fade */
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scale in (for modals, dropdowns) */
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-scale-in {
+    animation: scale-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Pop effect (for buttons, success states) */
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-pop {
+    animation: pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Shake (for errors) */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-4px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+.animate-shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Draw line (for checkmarks, icons) */
+@keyframes draw {
+    from {
+        stroke-dashoffset: 1;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Breathing pulse (for live indicators) */
+@keyframes breathe {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.animate-breathe {
+    animation: breathe 3s ease-in-out infinite;
+}
+
+/* Float (for decorative elements) */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INTERACTIVE STATES - Linear Polish
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Button press effect */
+.btn-press:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+}
+
+/* Card hover lift */
+.card-hover {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -8px hsl(var(--foreground) / 0.1);
+}
+
+/* Interactive glow on focus */
+.focus-glow:focus-within {
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+    transition: box-shadow 0.2s ease-out;
+}
+
+/* Smooth link underline */
+.link-underline {
+    position: relative;
+    text-decoration: none;
+}
+
+.link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   THEME TRANSITION POLISH
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Smooth color transitions for themed elements */
+.theme-transition {
+    transition: background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+/* Disable transitions during theme switch to prevent flash */
+.no-transition,
+.no-transition * {
+    transition: none !important;
+}

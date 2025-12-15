@@ -1,0 +1,47 @@
+# Dependencies
+**/node_modules/
+node_modules/
+
+# Build outputs
+**/dist/
+**/build/
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Android
+android/build/
+android/.gradle/
+android/app/build/
+*.apk
+*.aab
+*.apks
+bundletool.jar
+app.apks
+
+# Vite
+.vite/
+vite.config.js.timestamp-*
+
+# TypeScript
+*.tsbuildinfo

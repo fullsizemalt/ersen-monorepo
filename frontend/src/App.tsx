@@ -1,0 +1,54 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { TimerProvider } from './contexts/TimerContext';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Marketplace from './pages/Marketplace';
+import Onboarding from './pages/Onboarding';
+import AdminDashboard from './pages/AdminDashboard';
+import CLIAccess from './pages/CLIAccess';
+import DemoGallery from './pages/DemoGallery';
+import PrivateRoute from './components/layout/PrivateRoute';
+import ErrorBoundary from './components/ErrorBoundary';
+import './App.css';
+
+const App: React.FC = () => {
+    return (
+        <ThemeProvider>
+            <TimerProvider>
+                <AuthProvider>
+                    <div style={{ position: 'fixed', top: 0, left: 0, width: '20px', height: '20px', background: 'magenta', zIndex: 99999, pointerEvents: 'none' }} title="APP IS RENDERING"></div>
+                    <Router>
+                        <Routes>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/demos" element={
+                                <ErrorBoundary>
+                                    <DemoGallery />
+                                </ErrorBoundary>
+                            } />
+
+                            <Route element={<PrivateRoute />}>
+                                <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/marketplace" element={<Marketplace />} />
+                                <Route path="/onboarding" element={<Onboarding />} />
+                                <Route path="/admin" element={<AdminDashboard />} />
+                                <Route path="/cli" element={<CLIAccess />} />
+                                <Route path="/gallery" element={
+                                    <ErrorBoundary>
+                                        <DemoGallery />
+                                    </ErrorBoundary>
+                                } />
+                            </Route>
+
+                            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                        </Routes>
+                    </Router>
+                </AuthProvider>
+            </TimerProvider>
+        </ThemeProvider>
+    );
+};
+
+export default App;

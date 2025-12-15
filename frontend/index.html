@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>DAEMON 2.0 - Your Personal OS Dashboard</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Critical CSS to prevent FOUC - uses CSS variables that switch with theme -->
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            /* Light mode by default */
+            background-color: hsl(0 0% 99%);
+            color: hsl(224 14% 10%);
+        }
+
+        /* Dark mode override when .dark class is present */
+        html.dark,
+        html.dark body {
+            background-color: hsl(224 14% 4%);
+            color: hsl(0 0% 95%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
