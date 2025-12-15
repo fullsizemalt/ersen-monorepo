@@ -1,213 +1,75 @@
-# Contributing to DAEMON 2.0
+# Contributing to Ersen
 
-Thank you for your interest in contributing to DAEMON 2.0! This document provides guidelines and workflows for contributing.
+This guide outlines the development and deployment workflow for the Ersen project.
 
-## 📋 Prerequisites
+## 🌟 The "Two-Track" Workflow
 
-Before contributing, please:
+We use a two-track system to ensure fast development cycles without breaking production.
 
-1. Read the [Project Constitution](/.specify/memory/constitution.md)
-2. Review the [README](README.md) for project overview
-3. Check [existing issues](https://github.com/your-org/daemon2/issues) before creating new ones
+### 1. 🛠️ Development (Fast Track)
+**Goal:** Rapidly test changes on a real server before committing.
+**URL:** `https://daemon.runfoo.run`
+**Infrastructure:** Docker containers running on `nexus-vector`.
 
-## 🚀 Getting Started
-
-### Development Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/your-org/daemon2.git
-cd daemon2
-
-# Install dependencies
-cd backend && npm install
-cd ../frontend && npm install
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your credentials
-
-# Start development servers
-docker compose up postgres -d
-cd backend && npm run dev
-cd ../frontend && npm run dev
-```
-
-### Running Tests
-
-```bash
-# Backend tests
-cd backend && npm test
-
-# Frontend tests
-cd frontend && npm test
-
-# Full test suite
-npm test
-```
-
-## 🔄 Workflow
-
-### Branch Naming
-
-Use the following prefixes:
-
-- `feature/` - New features (e.g., `feature/spotify-widget`)
-- `fix/` - Bug fixes (e.g., `fix/auth-callback-error`)
-- `docs/` - Documentation changes (e.g., `docs/api-endpoints`)
-- `test/` - Test additions (e.g., `test/widget-install`)
-- `chore/` - Maintenance tasks (e.g., `chore/update-dependencies`)
-
-### Commit Messages
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-feat: add Spotify widget integration
-fix: resolve OAuth callback redirect issue
-docs: update API endpoint documentation
-test: add integration tests for widget installation
-chore: update TypeScript to v5.3
-```
-
-### Pull Request Process
-
-1. **Create a branch** from `master`:
-
+**How to Deploy to Dev:**
+1. Make your code changes locally.
+2. Run the sync script:
    ```bash
-   git checkout -b feature/your-feature
+   ./scripts/dev-sync.sh
    ```
+   *(Or use the VS Code Task: "Remote Dev: Sync & Restart")*
+3. The script `rsync`s your code to `nexus-vector` and restarts the containers.
+4. Refresh `https://daemon.runfoo.run`.
 
-2. **Make your changes** following the code standards
+**Note:** This bypasses Git and CI/CD completely. It is for **your eyes only** while developing.
 
-3. **Write/update tests** for your changes
+---
 
-4. **Run the test suite** to ensure nothing is broken:
+### 2. 🚀 Production (Safe Track)
+**Goal:** Release stable code to the world.
+**URL:** `https://ersen.xyz`
+**Infrastructure:** 
+- **Frontend:** Vercel (connected to GitHub)
+- **Backend:** Railway (connected to GitHub)
 
+**How to Deploy to Prod:**
+1. Verify your changes on the Dev server (`daemon.runfoo.run`).
+2. Commit your changes:
    ```bash
-   npm test
+   git commit -am "feat: amazing new feature"
    ```
-
-5. **Commit your changes** with a conventional commit message
-
-6. **Push your branch**:
-
+3. Push to GitHub:
    ```bash
-   git push origin feature/your-feature
+   git push origin master
    ```
+4. **Automation takes over:**
+   - GitHub Actions will run tests (CI).
+   - Vercel & Railway will automatically pull the new commit and deploy (CD).
 
-7. **Open a Pull Request** against `master`
+---
 
-8. **Wait for CI checks** to pass
+## 📂 Repository Structure
 
-9. **Address review feedback** if any
+- **`origin` (GitHub):** The Source of Truth. Triggers production deployments.
+- **`forgejo` (Internal):** Internal mirror/backup.
 
-10. **Merge** once approved and all checks pass
+## ⚡ Quick Commands
 
-## 📝 Code Standards
+| Task | Command |
+|------|---------|
+| **Start Dev Server** | `./scripts/dev-sync.sh` |
+| **Deploy Prod** | `git push origin master` |
+| **Local Install** | `bun install` |
+| **Local Run** | `bun run dev` (Runs frontend & backend in parallel locally) |
 
-### TypeScript
+## 🧩 Monorepo Overview
 
-- **No `any` types** - Use proper typing
-- **Strict mode enabled** - Follow compiler strictness
-- **Export types** - Export interfaces and types for reuse
+This is a **Bun** workspace.
+- `packages/shared`: Shared types and logic (Zod schemas, etc).
+- `backend`: Express API (Node.js).
+- `frontend`: React/Vite app.
+- `cli`: Command line tool.
 
-### Backend (Express)
-
-- Use async/await for asynchronous code
-- Handle errors with proper HTTP status codes
-- Validate all input using middleware
-- Use parameterized queries for PostgreSQL
-
-### Frontend (React)
-
-- Use functional components with hooks
-- Keep components small and focused
-- Use TypeScript interfaces for props
-- Follow the existing design system
-
-### Styling
-
-- Use CSS variables for theming
-- Follow the glassmorphism aesthetic
-- Ensure 60fps animations
-- Mobile-first responsive design
-
-## 🧪 Testing Guidelines
-
-### What to Test
-
-- **Critical paths**: Authentication, payments, widget installation
-- **Edge cases**: Empty states, error conditions, boundary values
-- **User journeys**: Complete flows from start to finish
-
-### Test Structure
-
-```typescript
-describe('WidgetService', () => {
-  describe('installWidget', () => {
-    it('should install widget for free tier user with available slots', async () => {
-      // Arrange
-      // Act
-      // Assert
-    });
-
-    it('should reject installation when slot limit exceeded', async () => {
-      // ...
-    });
-  });
-});
-```
-
-## 📁 Spec-Driven Development
-
-DAEMON 2.0 uses [Speckit](https://github.com/speckit/speckit) for specification-driven development.
-
-### Before Implementing a Feature
-
-1. **Create or update spec** in `specs/[phase-name]/`:
-   - `spec.md` - User stories and requirements
-   - `plan.md` - Technical implementation plan
-   - `tasks.md` - Task breakdown
-
-2. **Generate checklist** using `/speckit.checklist`
-
-3. **Complete checklist** before marking implementation done
-
-### Spec Commands
-
-```
-/speckit.specify   - Create feature specification
-/speckit.plan      - Generate implementation plan
-/speckit.tasks     - Generate task breakdown
-/speckit.checklist - Create requirements checklist
-/speckit.implement - Execute implementation
-```
-
-## 🐛 Reporting Bugs
-
-When reporting bugs, please include:
-
-1. **Description**: Clear description of the issue
-2. **Steps to Reproduce**: Minimal steps to reproduce
-3. **Expected Behavior**: What should happen
-4. **Actual Behavior**: What actually happens
-5. **Environment**: OS, browser, Node version
-6. **Screenshots**: If applicable
-
-## 💡 Suggesting Features
-
-For feature suggestions:
-
-1. Check if already suggested in issues
-2. Describe the use case
-3. Explain the expected behavior
-4. Consider how it fits the constitution principles
-
-## 📜 License
-
-By contributing, you agree that your contributions will be licensed under the [ISC License](LICENSE).
-
-## 🙏 Thank You
-
-Your contributions make DAEMON 2.0 better for everyone!
+**Config:**
+- Root `package.json` manages all dependencies.
+- Root `tsconfig.json` enforces strict type safety across the monorepo.
