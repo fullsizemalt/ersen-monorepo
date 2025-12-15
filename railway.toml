@@ -1,9 +1,10 @@
 [build]
 builder = "NIXPACKS"
-buildCommand = "bun install && bun run build --filter=ersen-backend"
+buildCommand = "bun install && bun run build:backend"
+nodeVersion = "20" # Explicitly set Node.js version to 20
 
 [deploy]
-startCommand = "bun run --filter=ersen-backend start"
+startCommand = "bun run start:backend"
 healthcheckPath = "/health"
 restartPolicyType = "ON_FAILURE"
 
