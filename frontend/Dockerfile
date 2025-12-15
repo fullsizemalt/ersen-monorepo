@@ -2,7 +2,7 @@ FROM node:20-alpine as builder
 
 WORKDIR /app
 
-RUN apk add --no-cache curl unzip \
+RUN apk add --no-cache curl unzip bash \
     && curl -fsSL https://bun.sh/install | bash \
     && mv /root/.bun/bin/bun /usr/local/bin/bun \
     && rm -rf /root/.bun
