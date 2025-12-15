@@ -1,6 +1,11 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine as builder
 
 WORKDIR /app
+
+RUN apk add --no-cache curl unzip \
+    && curl -fsSL https://bun.sh/install | bash \
+    && mv /root/.bun/bin/bun /usr/local/bin/bun \
+    && rm -rf /root/.bun
 
 COPY package*.json ./
 RUN bun install --frozen-lockfile
@@ -8,9 +13,14 @@ RUN bun install --frozen-lockfile
 COPY . .
 RUN npm run build
 
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
+
+RUN apk add --no-cache curl unzip \
+    && curl -fsSL https://bun.sh/install | bash \
+    && mv /root/.bun/bin/bun /usr/local/bin/bun \
+    && rm -rf /root/.bun
 
 COPY package*.json ./
 RUN bun install --frozen-lockfile --production
