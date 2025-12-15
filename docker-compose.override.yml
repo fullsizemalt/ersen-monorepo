@@ -5,10 +5,10 @@ services:
   frontend:
     networks:
       - traefik-public
-      - daemon-network
+      - ersen-network
 
 networks:
   traefik-public:
     external: true
-  daemon-network:
+  ersen-network:
     driver: bridge

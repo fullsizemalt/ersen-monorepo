@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.daemon.app',
-  appName: 'DAEMON',
+  appId: 'xyz.ersen.app',
+  appName: 'Ersen',
   webDir: 'dist'
 };
 

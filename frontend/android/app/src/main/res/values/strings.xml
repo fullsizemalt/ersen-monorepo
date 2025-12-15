@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">DAEMON</string>
-    <string name="title_activity_main">DAEMON</string>
-    <string name="package_name">com.daemon.app</string>
-    <string name="custom_url_scheme">com.daemon.app</string>
-    <string name="title_pro_features">Pro Features</string>
+    <string name="app_name">Ersen</string>
+    <string name="title_activity_main">Ersen</string>
+    <string name="package_name">xyz.ersen.app</string>
+    <string name="custom_url_scheme">xyz.ersen.app</string>
 </resources>

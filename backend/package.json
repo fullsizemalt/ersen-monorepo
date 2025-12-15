@@ -1,5 +1,5 @@
 {
-    "name": "daemon-backend",
+    "name": "ersen-backend",
     "version": "2.0.0",
     "description": "DAEMON 2.0 - Modular Widget Hub Backend",
     "main": "dist/index.js",

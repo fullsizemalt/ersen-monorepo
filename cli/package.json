@@ -1,11 +1,9 @@
 {
-    "name": "@daemon/cli",
-    "version": "0.0.1",
-    "description": "CLI for DAEMON 2.0",
-    "type": "module",
-    "bin": {
-        "daemon": "./bin/daemon.js"
-    },
+  "name": "ersen-cli",
+  "version": "1.0.0",
+  "bin": {
+    "ersen": "./bin/ersen.js"
+  },
     "scripts": {
         "build": "tsc",
         "start": "node bin/daemon.js",

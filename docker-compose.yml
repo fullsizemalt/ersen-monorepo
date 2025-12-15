@@ -4,13 +4,13 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_DB: daemon
-      POSTGRES_USER: daemon
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-daemon_password}
+      POSTGRES_DB: ersen
+      POSTGRES_USER: ersen
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ersen_password}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - daemon-network
+      - ersen-network
     restart: unless-stopped
 
   backend:
@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile
     environment:
       PORT: 3000
-      DATABASE_URL: postgresql://daemon:${DB_PASSWORD:-daemon_password}@db:5432/daemon
+      DATABASE_URL: postgresql://ersen:${DB_PASSWORD:-ersen_password}@db:5432/ersen
       NODE_ENV: production
       JWT_SECRET: ${JWT_SECRET}
       FRONTEND_URL: ${FRONTEND_URL}
@@ -38,18 +38,18 @@ services:
     depends_on:
       - db
     networks:
-      - daemon-network
+      - ersen-network
       - traefik-public
     restart: unless-stopped
     command: sh -c "npm run db:migrate && npm run db:seed && npm start"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
-      - "traefik.http.routers.daemon-api.rule=Host(`daemon.runfoo.run`) && (PathPrefix(`/api`) || PathPrefix(`/auth`))"
-      - "traefik.http.routers.daemon-api.priority=100"
-      - "traefik.http.routers.daemon-api.entrypoints=websecure"
-      - "traefik.http.routers.daemon-api.tls.certresolver=letsencrypt"
-      - "traefik.http.services.daemon-api.loadbalancer.server.port=3000"
+      - "traefik.http.routers.ersen-api.rule=Host(`api.ersen.xyz`) || (Host(`ersen.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/auth`)))"
+      - "traefik.http.routers.ersen-api.priority=100"
+      - "traefik.http.routers.ersen-api.entrypoints=websecure"
+      - "traefik.http.routers.ersen-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ersen-api.loadbalancer.server.port=3000"
 
   frontend:
     build:
@@ -58,20 +58,20 @@ services:
       args:
         VITE_API_URL: ${VITE_API_URL}
     networks:
-      - daemon-network
+      - ersen-network
       - traefik-public
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
-      - "traefik.http.routers.daemon-web.rule=Host(`daemon.runfoo.run`)"
-      - "traefik.http.routers.daemon-web.priority=10"
-      - "traefik.http.routers.daemon-web.entrypoints=websecure"
-      - "traefik.http.routers.daemon-web.tls.certresolver=letsencrypt"
-      - "traefik.http.services.daemon-web.loadbalancer.server.port=80"
+      - "traefik.http.routers.ersen-web.rule=Host(`ersen.xyz`)"
+      - "traefik.http.routers.ersen-web.priority=10"
+      - "traefik.http.routers.ersen-web.entrypoints=websecure"
+      - "traefik.http.routers.ersen-web.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ersen-web.loadbalancer.server.port=80"
 
 networks:
-  daemon-network:
+  ersen-network:
     driver: bridge
   traefik-public:
     external: true

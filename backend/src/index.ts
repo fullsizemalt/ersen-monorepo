@@ -33,7 +33,7 @@ app.get('/health', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`🚀 DAEMON 2.0 Backend running on port ${PORT}`);
+    console.log(`🚀 Ersen Backend running on port ${PORT}`);
     console.log(`📊 Database: ${process.env.DATABASE_URL?.split('@')[1]}`);
     console.log(`🔐 WorkOS: ${process.env.WORKOS_CLIENT_ID ? 'Configured' : 'Missing'}`);
     console.log(`💳 Stripe: ${process.env.STRIPE_SECRET_KEY ? 'Configured' : 'Missing'}`);

@@ -1,5 +1,5 @@
 {
-  "name": "daemon-monorepo",
+  "name": "ersen-monorepo",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -11,6 +11,7 @@
   "scripts": {
     "dev:frontend": "npm run dev -w frontend",
     "dev:backend": "npm run dev -w backend",
+    "dev": "bun run --parallel dev:backend dev:frontend",
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces"
   }

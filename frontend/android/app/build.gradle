@@ -1,11 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.daemon.app"
-    compileSdk rootProject.ext.compileSdkVersion
-    dynamicFeatures = [':pro_features']
+    namespace "xyz.ersen.app"
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.daemon.app"
+        applicationId "xyz.ersen.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

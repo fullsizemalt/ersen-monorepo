@@ -1,4 +1,4 @@
-package com.daemon.app;
+package xyz.ersen.app;
 
 import com.getcapacitor.BridgeActivity;
 
