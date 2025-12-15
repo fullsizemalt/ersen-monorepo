@@ -1,0 +1,7 @@
+{
+  "buildCommand": "bun run build --filter=ersen-frontend",
+  "devCommand": "bun run dev --filter=ersen-frontend",
+  "installCommand": "bun install",
+  "framework": "vite",
+  "outputDirectory": "frontend/dist"
+}

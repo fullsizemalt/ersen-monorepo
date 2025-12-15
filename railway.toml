@@ -1,0 +1,12 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "bun install && bun run build --filter=ersen-backend"
+
+[deploy]
+startCommand = "bun run --filter=ersen-backend start"
+healthcheckPath = "/health"
+restartPolicyType = "ON_FAILURE"
+
+[service]
+name = "ersen-backend"
+watchPatterns = ["backend/**", "packages/**", "package.json", "bun.lock"]
