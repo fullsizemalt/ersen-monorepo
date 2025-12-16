@@ -15,7 +15,8 @@ const WidgetIcon: React.FC<WidgetIconProps> = ({
     iconName,
     className,
     size = 24,
-    visualVariant = 'default'
+    visualVariant = 'default',
+    ariaLabel
 }) => {
     // Dynamic icon lookup
     const IconComponent = (Icons as any)[iconName] as LucideIcon;
