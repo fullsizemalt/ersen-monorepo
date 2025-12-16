@@ -138,6 +138,10 @@ The application follows a strict design language to ensure premium quality.
     - **Aggregators**: Apple Health, Google Health/Sleep (via API or export).
     - **Wearables**: Fitbit, Garmin, Strava (Activity heatmaps, daily step counts).
     - **Sleep**: Widget visualizing sleep stages (REM, Deep, Light).
+3. **Social & News (The "Digital Town Square" Stack)**:
+    - **Bluesky**: Timeline feed, "What's Hot", and post composer using AT Protocol.
+    - **Mastodon**: Instance-specific local feed, notifications, and federated timeline.
+    - **RSS / News**: Aggregated news reader with "Reader Mode" parsing.
 
 ---
 
