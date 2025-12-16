@@ -55,8 +55,8 @@ const AdminDashboard: React.FC = () => {
         <button
             onClick={() => setActiveTab(id)}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === id
-                    ? 'bg-red-500/10 text-red-500 font-medium'
-                    : 'text-zinc-400 hover:bg-zinc-900 hover:text-white'
+                ? 'bg-red-500/10 text-red-500 font-medium'
+                : 'text-zinc-400 hover:bg-zinc-900 hover:text-white'
                 }`}
         >
             <Icon size={18} />
@@ -83,6 +83,17 @@ const AdminDashboard: React.FC = () => {
                 </nav>
 
                 <div className="pt-6 border-t border-zinc-900 space-y-2">
+                    <button
+                        onClick={() => {
+                            // Logic would go here, for now just redirect
+                            navigate('/login');
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-zinc-900 hover:text-red-300 transition-colors rounded-xl"
+                    >
+                        <LogOut size={18} />
+                        <span>Log Out</span>
+                    </button>
+
                     <button
                         onClick={() => navigate('/dashboard')}
                         className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white transition-colors"
