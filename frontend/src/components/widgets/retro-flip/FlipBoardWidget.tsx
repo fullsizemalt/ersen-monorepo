@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Calendar } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import FlipDigit from '../../common/FlipDigit';
 import { WidgetProps } from '../../../types/widget';
 
-const FlipBoardWidget: React.FC<WidgetProps> = ({ config }) => {
+const FlipBoardWidget: React.FC<WidgetProps> = () => {
     const [time, setTime] = useState(new Date());
 
     useEffect(() => {

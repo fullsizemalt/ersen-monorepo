@@ -4,7 +4,7 @@ import { Layout } from 'react-grid-layout';
 import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
-import { Settings, Check, Zap, Plus, Sparkles } from 'lucide-react';
+import { Settings, Check, Plus, Sparkles } from 'lucide-react';
 import PricingModal from '../components/subscription/PricingModal';
 import WidgetGrid from '../components/common/WidgetGrid';
 import { Skeleton } from '@/components/ui/skeleton';

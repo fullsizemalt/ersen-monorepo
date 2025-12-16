@@ -21,7 +21,9 @@ export type WidgetTag =
     | 'media'
     | 'finance'
     | 'developer'
-    | 'selfhosted';
+    | 'selfhosted'
+    | 'aesthetic'
+    | 'streaming';
 
 export interface WidgetConfig {
     [key: string]: any;
