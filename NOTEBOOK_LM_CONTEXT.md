@@ -143,16 +143,16 @@ The application follows a strict design language to ensure premium quality.
     - **Mastodon**: Instance-specific local feed, notifications, and federated timeline.
     - **RSS / News**: Aggregated news reader with "Reader Mode" parsing.
 
-### Phase E: Security & Hardening (Zero Trust)
+### Phase E: Security & Hardening (Zero Trust) - IN PROGRESS
 
-1. **API Gateway & Zero Trust**:
-    - **Traefik Rate Limiting**: Limit usage per user/IP to prevent "Main Character" syndrome crashes.
-    - **Guardrails**: Strict Zod schema validation for all inputs (Runtime protection).
-    - **Zombie API Cleanup**: Automated scripts to deprecate old widget endpoints.
+1. **API Gateway & Zero Trust** ✅:
+    - **Traefik Rate Limiting**: 100 req/min per IP with 200 burst (DEPLOYED).
+    - **Guardrails**: Zod schema validation for all widget API inputs (DEPLOYED).
+    - **Zombie API Cleanup**: (Planned) Automated scripts to deprecate old widget endpoints.
 2. **Infrastructure Hardening**:
-    - **Database Encryption**: Enforce encryption at rest for user configs in Postgres.
-    - **Non-Root Containers**: Ensure all Docker services run as non-privileged users.
-    - **Network Segmentation**: Isolate "Arcade" peer-to-peer traffic from core user data.
+    - **Database Encryption**: (Planned) Encryption at rest for user configs in Postgres.
+    - **Non-Root Containers**: ✅ Backend runs as `nodejs:1001`, Frontend uses `nginx` user (DEPLOYED).
+    - **Network Segmentation**: (Planned) Isolate "Arcade" peer-to-peer traffic from core user data.
 
 ---
 
