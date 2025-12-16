@@ -8,6 +8,7 @@ interface WidgetIconProps {
     className?: string;
     size?: number;
     visualVariant?: 'default' | 'glow' | 'flat' | 'glass';
+    ariaLabel?: string;
 }
 
 const WidgetIcon: React.FC<WidgetIconProps> = ({
@@ -33,7 +34,11 @@ const WidgetIcon: React.FC<WidgetIconProps> = ({
     };
 
     return (
-        <div className={cn("relative flex items-center justify-center", className)}>
+        <div
+            className={cn("relative flex items-center justify-center", className)}
+            role="img"
+            aria-label={ariaLabel || iconName}
+        >
             {/* Optional backing glow for 'glow' variant */}
             {visualVariant === 'glow' && (
                 <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />

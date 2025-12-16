@@ -5,6 +5,7 @@ import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { Settings, Check, Plus, Sparkles } from 'lucide-react';
+import LanguageSwitcher from '../components/common/LanguageSwitcher';
 import PricingModal from '../components/subscription/PricingModal';
 import WidgetGrid from '../components/common/WidgetGrid';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -348,6 +349,8 @@ const Dashboard: React.FC = () => {
                             Upgrade Plan
                         </button>
                     )}
+
+                    <LanguageSwitcher />
 
                     <button
                         onClick={() => isEditing ? handleFinishEditing() : setIsEditing(true)}

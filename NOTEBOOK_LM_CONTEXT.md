@@ -106,6 +106,10 @@ The application follows a strict design language to ensure premium quality.
 
 - **Voice Control**: "Hey Ersen, set a timer" (Web Speech API).
 - **AI Assistant**: Context-aware suggestions within widgets.
+- **File Converter (`widget-converter`)**:
+  - **Function**: Drag & drop file conversion (e.g., HEIC to JPG, PDF to Doc, WebP to PNG).
+  - **Implementation**: WASM-based (ffmpeg.wasm) for privacy/local processing, or cloud-based for heavy lifting.
+  - **UI**: Minimalist drop zone with progress rings.
 
 ### Phase C: Community & Arcade
 
