@@ -6,7 +6,7 @@ version: '3.8'
 services:
   # Traefik Reverse Proxy
   traefik:
-    image: traefik:v2.10
+    image: traefik:v3.3
     command:
       - "--api.dashboard=true"
       - "--providers.docker=true"
@@ -48,7 +48,7 @@ services:
       - ersen-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ersen"]
+      test: [ "CMD-SHELL", "pg_isready -U ersen" ]
       interval: 10s
       timeout: 5s
       retries: 5
