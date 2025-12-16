@@ -23,90 +23,16 @@ const DEMO_WIDGETS: ActiveWidget[] = [
     { id: 7, name: 'Spotify', slug: 'spotify', config: {}, position: { x: 2, y: 4, w: 2, h: 2 } },
 ];
 
-// Layout templates from Demo Gallery personas
-const LAYOUT_TEMPLATES: Record<string, { widgets: Array<{ slug: string; x: number; y: number; w: number; h: number; config?: Record<string, any> }> }> = {
-    sysadmin: {
-        widgets: [
-            { slug: 'system-info', x: 0, y: 0, w: 2, h: 2 },
-            { slug: 'clock', x: 2, y: 0, w: 2, h: 1 },
-            { slug: 'quick-links', x: 2, y: 1, w: 2, h: 2 },
-            { slug: 'weather', x: 4, y: 0, w: 2, h: 2 },
-        ],
-    },
-    commuter: {
-        widgets: [
-            { slug: 'flip-board', x: 0, y: 0, w: 4, h: 2, config: { title: 'TRANSIT' } },
-            { slug: 'weather', x: 4, y: 0, w: 2, h: 2 },
-            { slug: 'quick-links', x: 0, y: 2, w: 2, h: 2 },
-            { slug: 'clock', x: 2, y: 2, w: 2, h: 1 },
-        ],
-    },
-    receptionist: {
-        widgets: [
-            { slug: 'photo-frame', x: 0, y: 0, w: 2, h: 2 },
-            { slug: 'sticky-notes', x: 2, y: 0, w: 2, h: 2, config: { content: '👋 Welcome to Ersen HQ!\nWiFi: Guest-Network\nPass: welcome123' } },
-            { slug: 'qr-code', x: 4, y: 0, w: 2, h: 2, config: { initialValue: 'WIFI:S:ErsenGuest;T:WPA;P:password123;;', initialLabel: 'Guest Wi-Fi' } },
-            { slug: 'clock', x: 0, y: 2, w: 4, h: 2 },
-        ],
-    },
-    streamer: {
-        widgets: [
-            { slug: 'stream-tools', x: 0, y: 0, w: 4, h: 3 },
-            { slug: 'spotify', x: 4, y: 0, w: 2, h: 2 },
-            { slug: 'system-info', x: 4, y: 2, w: 2, h: 2 },
-            { slug: 'clock', x: 0, y: 3, w: 2, h: 1 },
-        ],
-    },
-    homechef: {
-        widgets: [
-            { slug: 'stopwatch', x: 0, y: 0, w: 2, h: 2 },
-            { slug: 'countdown', x: 2, y: 0, w: 2, h: 1 },
-            { slug: 'pomodoro', x: 2, y: 1, w: 2, h: 2 },
-            { slug: 'spotify', x: 4, y: 0, w: 2, h: 2 },
-            { slug: 'sticky-notes', x: 0, y: 2, w: 4, h: 2 },
-            { slug: 'quick-links', x: 4, y: 2, w: 2, h: 2 },
-        ],
-    },
-    poweruser: {
-        widgets: [
-            { slug: 'clock', x: 0, y: 0, w: 2, h: 1 },
-            { slug: 'task-manager', x: 0, y: 1, w: 2, h: 3 },
-            { slug: 'weather', x: 2, y: 0, w: 2, h: 2 },
-            { slug: 'quick-links', x: 2, y: 2, w: 2, h: 2 },
-            { slug: 'quote', x: 4, y: 0, w: 2, h: 1 },
-            { slug: 'sticky-notes', x: 4, y: 1, w: 2, h: 2 },
-        ],
-    },
-    student: {
-        widgets: [
-            { slug: 'pomodoro', x: 0, y: 0, w: 2, h: 2 },
-            { slug: 'task-manager', x: 2, y: 0, w: 2, h: 2 },
-            { slug: 'countdown', x: 4, y: 0, w: 2, h: 1 },
-            { slug: 'calculator', x: 4, y: 1, w: 2, h: 2 },
-            { slug: 'sticky-notes', x: 0, y: 2, w: 2, h: 2 },
-            { slug: 'quote', x: 2, y: 2, w: 2, h: 1 },
-        ],
-    },
-    developer: {
-        widgets: [
-            { slug: 'clock', x: 0, y: 0, w: 2, h: 1 },
-            { slug: 'pomodoro', x: 0, y: 1, w: 2, h: 2 },
-            { slug: 'quick-links', x: 2, y: 0, w: 2, h: 2 },
-            { slug: 'authenticator', x: 2, y: 2, w: 2, h: 2 },
-            { slug: 'ai-assistant', x: 4, y: 0, w: 2, h: 4 },
-        ],
-    },
-    wellness: {
-        widgets: [
-            { slug: 'breathing', x: 0, y: 0, w: 2, h: 2 },
-            { slug: 'water-tracker', x: 2, y: 0, w: 2, h: 2 },
-            { slug: 'mood-tracker', x: 4, y: 0, w: 2, h: 2 },
-            { slug: 'habit-tracker', x: 0, y: 2, w: 2, h: 2 },
-            { slug: 'quote', x: 2, y: 2, w: 2, h: 1 },
-            { slug: 'weather', x: 2, y: 3, w: 2, h: 2 },
-        ],
-    },
-};
+import { PERSONA_TEMPLATES } from '../constants/templates';
+
+// Map shared templates to the format expected by Dashboard
+const LAYOUT_TEMPLATES: Record<string, { widgets: Array<{ slug: string; x: number; y: number; w: number; h: number; config?: Record<string, any> }> }> = {};
+
+PERSONA_TEMPLATES.forEach(template => {
+    LAYOUT_TEMPLATES[template.id] = {
+        widgets: template.widgets
+    };
+});
 
 import { useVoiceControl } from '../hooks/useVoiceControl';
 import VoiceOverlay from '../components/premium/VoiceOverlay';
@@ -284,10 +210,38 @@ const Dashboard: React.FC = () => {
         }
     }, [loading]);
 
-    const applyLayoutTemplate = (templateId: string) => {
+    const applyLayoutTemplate = async (templateId: string) => {
         const template = LAYOUT_TEMPLATES[templateId];
         if (!template) return;
 
+        // Real User: Persist to Backend
+        if (user && !demoMode) {
+            setLoading(true);
+            try {
+                // Optimized: Delete all existing widgets first
+                // In a real app we might want to do a bulk replace API endpoint, but loop is fine for < 20 items
+                const deletePromises = widgets.map(w => api.delete(`/widgets/active/${w.id}`).catch(err => console.warn('Delete failed', err)));
+                await Promise.all(deletePromises);
+
+                // Install new widgets sequentially to preserve order (though layout engine handles pos)
+                // Parallel is faster
+                const installPromises = template.widgets.map(w => api.post('/widgets/active', {
+                    slug: w.slug,
+                    position: { x: w.x, y: w.y, w: w.w, h: w.h },
+                    config: w.config || {}
+                }));
+                await Promise.all(installPromises);
+
+                await fetchWidgets(); // Reload authoritative state
+            } catch (e) {
+                console.error("Failed to apply template", e);
+            } finally {
+                setLoading(false);
+            }
+            return;
+        }
+
+        // Demo Mode: Local State Only
         const newWidgets: ActiveWidget[] = template.widgets.map((w, index) => {
             const manifest = WIDGET_REGISTRY[w.slug];
             return {
@@ -300,14 +254,17 @@ const Dashboard: React.FC = () => {
         });
 
         setWidgets(newWidgets);
-        setDemoMode(true);
-
-        localStorage.setItem('ersen_demo_widgets', JSON.stringify(newWidgets.map(w => ({
-            id: w.id,
-            slug: w.slug,
-            position: w.position,
-            config: w.config,
-        }))));
+        // Do NOT force demo mode if we were just trying to apply a template but failed auth check? 
+        // Logic: if !user, we are guest/demo.
+        if (!user) {
+            setDemoMode(true);
+            localStorage.setItem('ersen_demo_widgets', JSON.stringify(newWidgets.map(w => ({
+                id: w.id,
+                slug: w.slug,
+                position: w.position,
+                config: w.config,
+            }))));
+        }
     };
 
     return (
@@ -373,6 +330,20 @@ const Dashboard: React.FC = () => {
                     )}
 
                     <LanguageSwitcher />
+
+                    <div className="hidden md:flex flex-col items-end px-2 border-r border-border/40 mr-2">
+                        <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-mono">
+                            Widgets
+                        </span>
+                        <div className="flex items-baseline gap-1">
+                            <span className={`text-sm font-bold ${widgets.length >= 10 ? 'text-red-500' : 'text-foreground'}`}>
+                                {widgets.length}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                                / {user?.tier === 'pro' ? '∞' : '10'}
+                            </span>
+                        </div>
+                    </div>
 
                     <button
                         onClick={() => isEditing ? handleFinishEditing() : setIsEditing(true)}

@@ -7,156 +7,21 @@ import {
 } from 'lucide-react';
 
 // Demo persona configurations
-interface DemoPersona {
-    id: string;
-    name: string;
-    title: string;
-    description: string;
-    icon: React.ReactNode;
-    color: string;
-    gradient: string;
-    widgets: string[];
-    features: string[];
-    preview: {
-        widgets: Array<{
-            slug: string;
-            name: string;
-            icon: string;
-            x: number;
-            y: number;
-            w: number;
-            h: number;
-        }>;
-    };
-}
+import { PERSONA_TEMPLATES, ICONS_MAP } from '../constants/templates';
+import { WIDGET_REGISTRY } from '../components/widgets/registry';
 
-const DEMO_PERSONAS: DemoPersona[] = [
-    {
-        id: 'sysadmin',
-        name: 'SysAdmin',
-        title: 'Infrastructure Ops',
-        description: 'Monitor servers, containers, and services at a glance. Perfect for homelab enthusiasts and DevOps engineers.',
-        icon: <Server size={24} />,
-        color: 'text-orange-500',
-        gradient: 'from-orange-500/20 to-red-500/20',
-        widgets: ['grafana', 'prometheus', 'system-info', 'quick-links'],
-        features: ['Live metrics visualization', 'Container status', 'Network monitoring', 'Quick SSH access'],
-        preview: {
-            widgets: [
-                { slug: 'grafana', name: 'Grafana', icon: '📊', x: 0, y: 0, w: 4, h: 3 },
-                { slug: 'prometheus', name: 'Prometheus', icon: '🔥', x: 4, y: 0, w: 2, h: 3 },
-                { slug: 'system-info', name: 'System', icon: '💻', x: 0, y: 3, w: 2, h: 2 },
-                { slug: 'quick-links', name: 'SSH Links', icon: '🔗', x: 2, y: 3, w: 2, h: 2 },
-                { slug: 'clock', name: 'Uptime', icon: '🕐', x: 4, y: 3, w: 2, h: 1 },
-            ],
-        },
-    },
-    {
-        id: 'homechef',
-        name: 'Home Chef',
-        title: 'Kitchen Command Center',
-        description: 'Multiple timers, recipes, and music control. Keep your cooking organized and entertaining.',
-        icon: <ChefHat size={24} />,
-        color: 'text-green-500',
-        gradient: 'from-green-500/20 to-emerald-500/20',
-        widgets: ['pomodoro', 'stopwatch', 'countdown', 'spotify', 'sticky-notes', 'quick-links'],
-        features: ['Multiple cooking timers', 'Recipe notes', 'Spotify controls', 'Shopping list'],
-        preview: {
-            widgets: [
-                { slug: 'stopwatch', name: 'Timer 1', icon: '⏱️', x: 0, y: 0, w: 2, h: 2 },
-                { slug: 'countdown', name: 'Timer 2', icon: '⏳', x: 2, y: 0, w: 2, h: 1 },
-                { slug: 'countdown', name: 'Timer 3', icon: '⏳', x: 2, y: 1, w: 2, h: 1 },
-                { slug: 'spotify', name: 'Music', icon: '🎵', x: 4, y: 0, w: 2, h: 2 },
-                { slug: 'sticky-notes', name: 'Recipe', icon: '📝', x: 0, y: 2, w: 4, h: 2 },
-                { slug: 'quick-links', name: 'Recipes', icon: '🔗', x: 4, y: 2, w: 2, h: 2 },
-            ],
-        },
-    },
-    {
-        id: 'poweruser',
-        name: 'Power Admin',
-        title: 'Executive Dashboard',
-        description: 'Email, calendar, tasks, and communications in one view. Stay on top of everything.',
-        icon: <Briefcase size={24} />,
-        color: 'text-blue-500',
-        gradient: 'from-blue-500/20 to-indigo-500/20',
-        widgets: ['google-calendar', 'gmail', 'task-manager', 'kanban', 'quick-links'],
-        features: ['Calendar overview', 'Email preview', 'Task management', 'Project boards'],
-        preview: {
-            widgets: [
-                { slug: 'google-calendar', name: 'Calendar', icon: '📅', x: 0, y: 0, w: 2, h: 3 },
-                { slug: 'gmail', name: 'Email', icon: '📧', x: 2, y: 0, w: 2, h: 3 },
-                { slug: 'task-manager', name: 'Tasks', icon: '✅', x: 4, y: 0, w: 2, h: 2 },
-                { slug: 'quick-links', name: 'Apps', icon: '🔗', x: 4, y: 2, w: 2, h: 1 },
-                { slug: 'clock', name: 'Clock', icon: '🕐', x: 0, y: 3, w: 2, h: 1 },
-                { slug: 'weather', name: 'Weather', icon: '⛅', x: 2, y: 3, w: 2, h: 1 },
-            ],
-        },
-    },
-    {
-        id: 'student',
-        name: 'Student',
-        title: 'Study Mode',
-        description: 'Focus timer, task tracking, and exam countdowns. Maximize your study sessions.',
-        icon: <GraduationCap size={24} />,
-        color: 'text-purple-500',
-        gradient: 'from-purple-500/20 to-pink-500/20',
-        widgets: ['pomodoro', 'task-manager', 'countdown', 'calculator', 'sticky-notes', 'quote'],
-        features: ['Pomodoro technique', 'Assignment tracking', 'Exam countdown', 'Study notes'],
-        preview: {
-            widgets: [
-                { slug: 'pomodoro', name: 'Focus', icon: '🍅', x: 0, y: 0, w: 2, h: 2 },
-                { slug: 'task-manager', name: 'Homework', icon: '✅', x: 2, y: 0, w: 2, h: 2 },
-                { slug: 'countdown', name: 'Exam', icon: '⏳', x: 4, y: 0, w: 2, h: 1 },
-                { slug: 'calculator', name: 'Calc', icon: '🔢', x: 4, y: 1, w: 2, h: 2 },
-                { slug: 'sticky-notes', name: 'Notes', icon: '📝', x: 0, y: 2, w: 2, h: 2 },
-                { slug: 'quote', name: 'Motivation', icon: '💭', x: 2, y: 2, w: 2, h: 1 },
-            ],
-        },
-    },
-    {
-        id: 'developer',
-        name: 'Developer',
-        title: 'Code & Ship',
-        description: 'GitHub activity, quick links to repos, and focus timers. Built for makers.',
-        icon: <Code size={24} />,
-        color: 'text-cyan-500',
-        gradient: 'from-cyan-500/20 to-teal-500/20',
-        widgets: ['github', 'pomodoro', 'quick-links', 'ai-assistant', 'clock', 'authenticator'],
-        features: ['GitHub PRs & Issues', 'Quick repo access', 'AI coding assistant', '2FA codes'],
-        preview: {
-            widgets: [
-                { slug: 'github', name: 'GitHub', icon: '🐙', x: 0, y: 0, w: 2, h: 3 },
-                { slug: 'ai-assistant', name: 'AI', icon: '🤖', x: 2, y: 0, w: 2, h: 3 },
-                { slug: 'quick-links', name: 'Repos', icon: '🔗', x: 4, y: 0, w: 2, h: 2 },
-                { slug: 'authenticator', name: '2FA', icon: '🔑', x: 4, y: 2, w: 2, h: 2 },
-                { slug: 'pomodoro', name: 'Focus', icon: '🍅', x: 0, y: 3, w: 2, h: 2 },
-                { slug: 'clock', name: 'UTC', icon: '🕐', x: 2, y: 3, w: 2, h: 1 },
-            ],
-        },
-    },
-    {
-        id: 'wellness',
-        name: 'Wellness',
-        title: 'Mind & Body',
-        description: 'Track habits, moods, water intake, and practice mindfulness. Prioritize your wellbeing.',
-        icon: <Heart size={24} />,
-        color: 'text-rose-500',
-        gradient: 'from-rose-500/20 to-pink-500/20',
-        widgets: ['breathing', 'water-tracker', 'mood-tracker', 'habit-tracker', 'quote', 'weather'],
-        features: ['Breathing exercises', 'Hydration tracking', 'Mood journaling', 'Habit streaks'],
-        preview: {
-            widgets: [
-                { slug: 'breathing', name: 'Breathe', icon: '🧘', x: 0, y: 0, w: 2, h: 2 },
-                { slug: 'water-tracker', name: 'Water', icon: '💧', x: 2, y: 0, w: 2, h: 2 },
-                { slug: 'mood-tracker', name: 'Mood', icon: '😊', x: 4, y: 0, w: 2, h: 2 },
-                { slug: 'habit-tracker', name: 'Habits', icon: '🎯', x: 0, y: 2, w: 2, h: 2 },
-                { slug: 'quote', name: 'Daily Quote', icon: '💭', x: 2, y: 2, w: 2, h: 1 },
-                { slug: 'weather', name: 'Weather', icon: '⛅', x: 2, y: 3, w: 2, h: 1 },
-            ],
-        },
-    },
-];
+// Helper to convert template to the format expected by the gallery
+const DEMO_PERSONAS = PERSONA_TEMPLATES.map(t => ({
+    ...t,
+    icon: React.createElement(ICONS_MAP[t.iconName], { size: 24 }),
+    preview: {
+        widgets: t.widgets.map(w => ({
+            ...w,
+            name: WIDGET_REGISTRY[w.slug]?.name || w.slug,
+            icon: WIDGET_REGISTRY[w.slug]?.icon || '?',
+        }))
+    }
+}));
 
 const DemoGallery: React.FC = () => {
     const navigate = useNavigate();
