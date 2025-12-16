@@ -22,7 +22,7 @@ const LetterboxdWidget: React.FC<WidgetProps> = () => {
                         <div className="relative aspect-[2/3] rounded overflow-hidden border border-white/10 group-hover:border-[#00e054] transition-colors">
                             <img src={review.img} alt={review.title} className="w-full h-full object-cover" />
                             <div className="absolute top-1 right-1 bg-black/60 px-1 rounded flex items-center gap-0.5">
-                                <span className="text-[10px] text-[#00e054]">★</span>
+                                <Star size={10} className="fill-[#00e054] text-[#00e054]" />
                                 <span className="text-[10px]">{review.rating}</span>
                             </div>
                         </div>
