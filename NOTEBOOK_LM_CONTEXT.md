@@ -116,10 +116,24 @@ The application follows a strict design language to ensure premium quality.
 1. **Micro-Games Arcade**:
     - WarioWare-style mini-games played in 2x2 widgets.
     - **Multiplayer**: Room-code based peer-to-peer play.
-    - **Titles**: Snake, Pong, Micro-Battleship, Drug Wars (Market Sim).
+    - **Titles**:
+        - **Retro**: Snake, Pong, Micro-Battleship.
+        - **Sim**: Drug Wars (Market Sim).
+        - **Action**: Brick Breaker (Arkanoid style), Kaboom (Catching bombs), Shell Game (Focus test).
 2. **Community Bulletin**:
     - Geo-fenced or Interest-based "digital corkboard".
     - Post-it note aesthetic.
+
+### Phase D: Deep Integrations
+
+1. **Media & Entertainment (The "Couch Potato" Stack)**:
+    - **Trakt**: Synchronize watch history, "Up Next" to-watch list.
+    - **IMDb / Rotten Tomatoes**: Widget showing ratings for currently playing movies (via Plex/Jellyfin hooks).
+    - **Letterboxd**: Display latest reviews or "Diary" grid.
+2. **Health & Fitness (The "Quantified Self" Stack)**:
+    - **Aggregators**: Apple Health, Google Health/Sleep (via API or export).
+    - **Wearables**: Fitbit, Garmin, Strava (Activity heatmaps, daily step counts).
+    - **Sleep**: Widget visualizing sleep stages (REM, Deep, Light).
 
 ---
 
