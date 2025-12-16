@@ -3,7 +3,7 @@ import { WidgetProps } from '../../../types/widget';
 import WidgetWrapper from '../WidgetWrapper';
 
 const StickyNotesWidget: React.FC<WidgetProps> = ({ config, onConfigChange }) => {
-    const [note, setNote] = useState(config.note || '');
+    const [note, setNote] = useState(config.note || config.content || '');
 
     // Debounce save
     useEffect(() => {

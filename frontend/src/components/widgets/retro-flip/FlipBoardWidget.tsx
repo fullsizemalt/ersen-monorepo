@@ -3,7 +3,7 @@ import { Calendar } from 'lucide-react';
 import FlipDigit from '../../common/FlipDigit';
 import { WidgetProps } from '../../../types/widget';
 
-const FlipBoardWidget: React.FC<WidgetProps> = () => {
+const FlipBoardWidget: React.FC<WidgetProps> = ({ config }) => {
     const [time, setTime] = useState(new Date());
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -23,6 +23,10 @@ const FlipBoardWidget: React.FC<WidgetProps> = () => {
     const year = time.getFullYear();
     const weekday = time.toLocaleString('default', { weekday: 'short' }).toUpperCase();
 
+    // Configurable display
+    const locationLabel = config?.title || "LOCAL_TIME";
+    const statusLabel = config?.status || "ON TIME";
+
     if (!isLoaded) return <div className="w-full h-full bg-zinc-950 animate-pulse" />;
 
     return (
@@ -36,12 +40,12 @@ const FlipBoardWidget: React.FC<WidgetProps> = () => {
                 <div className="flex items-center gap-2">
                     <div className="flex flex-col">
                         <span className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">Location</span>
-                        <span className="text-sm font-bold text-amber-500 tracking-wider font-mono">LOCAL_TIME</span>
+                        <span className="text-sm font-bold text-amber-500 tracking-wider font-mono uppercase">{locationLabel}</span>
                     </div>
                 </div>
                 <div className="flex flex-col items-end">
                     <span className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase">Status</span>
-                    <span className="text-xs font-bold text-emerald-500 tracking-widest animate-pulse">ON TIME</span>
+                    <span className="text-xs font-bold text-emerald-500 tracking-widest animate-pulse uppercase">{statusLabel}</span>
                 </div>
             </div>
 
