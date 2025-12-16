@@ -37,6 +37,25 @@ export const createPortalSession = async (customerId: string, returnUrl: string)
     });
 };
 
+// Coupon Management
+export const listCoupons = async (limit = 10) => {
+    return stripe.coupons.list({ limit });
+};
+
+export const createCoupon = async (params: Stripe.CouponCreateParams) => {
+    return stripe.coupons.create(params);
+};
+
+export const deleteCoupon = async (couponId: string) => {
+    return stripe.coupons.del(couponId);
+};
+
+export const applyCouponToCustomer = async (customerId: string, couponId: string) => {
+    return stripe.customers.update(customerId, {
+        coupon: couponId
+    });
+};
+
 export const getSubscription = async (subscriptionId: string) => {
     return stripe.subscriptions.retrieve(subscriptionId);
 };

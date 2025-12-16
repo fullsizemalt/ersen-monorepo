@@ -17,3 +17,12 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
         return res.status(401).json({ error: 'Invalid token' });
     }
 };
+
+export const requireAdmin = (req: Request, res: Response, next: NextFunction) => {
+    // @ts-ignore
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        return res.status(403).json({ error: 'Forbidden: Admin access only' });
+    }
+};

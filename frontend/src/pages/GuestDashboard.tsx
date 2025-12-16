@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, LayoutTemplate } from 'lucide-react';
 import WidgetGrid from '../components/common/WidgetGrid';
 import { ActiveWidget } from '../types/widget';
@@ -117,6 +117,15 @@ const GuestDashboard: React.FC = () => {
                     onConfigChange={() => { }}
                 />
             </main>
+
+            {/* Footer */}
+            <footer className="text-center py-6 pb-32 text-xs text-zinc-500 relative z-40">
+                <div className="flex justify-center gap-6 mb-2">
+                    <Link to="/legal/terms" className="hover:text-zinc-300 transition-colors">Terms of Service</Link>
+                    <Link to="/legal/privacy" className="hover:text-zinc-300 transition-colors">Privacy Policy</Link>
+                </div>
+                <p>&copy; {new Date().getFullYear()} Ersen. All rights reserved.</p>
+            </footer>
 
             {/* Floating Claim Bar (Mobile/Persistent) */}
             <div className="fixed bottom-0 left-0 right-0 p-4 md:p-6 z-50 bg-gradient-to-t from-background via-background/95 to-transparent">

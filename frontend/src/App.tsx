@@ -15,6 +15,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
 import GuestDashboard from './pages/GuestDashboard';
+import Terms from './pages/legal/Terms';
+import Privacy from './pages/legal/Privacy';
 
 const App: React.FC = () => {
     return (
@@ -25,6 +27,8 @@ const App: React.FC = () => {
                         <Routes>
                             <Route path="/" element={<GuestDashboard />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/legal/terms" element={<Terms />} />
+                            <Route path="/legal/privacy" element={<Privacy />} />
                             <Route path="/demos" element={
                                 <ErrorBoundary>
                                     <DemoGallery />
