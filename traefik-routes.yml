@@ -1,0 +1,25 @@
+http:
+  routers:
+    ersen-web:
+      rule: "Host(`ersen.xyz`) || Host(`www.ersen.xyz`)"
+      service: ersen-frontend
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+    ersen-api:
+      rule: "Host(`api.ersen.xyz`)"
+      service: ersen-backend
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+  services:
+    ersen-frontend:
+      loadBalancer:
+        servers:
+          - url: "http://ersen-frontend-1:80"
+    ersen-backend:
+      loadBalancer:
+        servers:
+          - url: "http://ersen-backend-1:3000"

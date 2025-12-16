@@ -9,8 +9,8 @@ services:
     image: traefik:v3.3
     command:
       - "--api.dashboard=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.filename=/etc/traefik/routes.yml"
+      - "--providers.file.watch=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
@@ -21,12 +21,11 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik_letsencrypt:/letsencrypt
+      - ./traefik-routes.yml:/etc/traefik/routes.yml:ro
     networks:
       - traefik-public
-    environment:
-      - DOCKER_API_VERSION=1.44
+      - ersen-network
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
