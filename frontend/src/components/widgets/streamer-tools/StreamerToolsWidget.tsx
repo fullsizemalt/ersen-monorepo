@@ -4,7 +4,7 @@ import { Twitch, MessageSquare, Activity, Share2, Users, Mic, Video } from 'luci
 
 const StreamerToolsWidget: React.FC<WidgetProps> = () => {
     const [isLive, setIsLive] = useState(false);
-    const [viewers, setViewers] = useState(1243);
+    const [viewers, _setViewers] = useState(1243);
     const [title, setTitle] = useState("Late Night Coding & Chill ☕ | Building Widgets");
 
     return (

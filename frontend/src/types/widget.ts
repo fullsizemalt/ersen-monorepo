@@ -23,7 +23,9 @@ export type WidgetTag =
     | 'developer'
     | 'selfhosted'
     | 'aesthetic'
-    | 'streaming';
+    | 'streaming'
+    | 'productivity'
+    | 'mobile';
 
 export interface WidgetConfig {
     [key: string]: any;
