@@ -19,7 +19,6 @@ const App: React.FC = () => {
         <ThemeProvider>
             <TimerProvider>
                 <AuthProvider>
-                    <div style={{ position: 'fixed', top: 0, left: 0, width: '20px', height: '20px', background: 'magenta', zIndex: 99999, pointerEvents: 'none' }} title="APP IS RENDERING"></div>
                     <Router>
                         <Routes>
                             <Route path="/login" element={<Login />} />

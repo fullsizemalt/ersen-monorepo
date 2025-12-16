@@ -107,7 +107,7 @@ const Dashboard: React.FC = () => {
 
     // Check for preferred layout from Demo Gallery
     useEffect(() => {
-        const preferredLayout = localStorage.getItem('daemon_preferred_layout');
+        const preferredLayout = localStorage.getItem('ersen_preferred_layout');
         if (preferredLayout && !loading) {
             try {
                 const { id } = JSON.parse(preferredLayout);
@@ -115,7 +115,7 @@ const Dashboard: React.FC = () => {
                     applyLayoutTemplate(id);
                     setAppliedTemplate(id);
                     // Clear the preference after applying
-                    localStorage.removeItem('daemon_preferred_layout');
+                    localStorage.removeItem('ersen_preferred_layout');
                 }
             } catch (e) {
                 console.error('Failed to parse preferred layout', e);
@@ -142,7 +142,7 @@ const Dashboard: React.FC = () => {
         setDemoMode(true);
 
         // Save to localStorage
-        localStorage.setItem('daemon_demo_widgets', JSON.stringify(newWidgets.map(w => ({
+        localStorage.setItem('ersen_demo_widgets', JSON.stringify(newWidgets.map(w => ({
             id: w.id,
             slug: w.slug,
             position: w.position,
@@ -152,7 +152,7 @@ const Dashboard: React.FC = () => {
 
     const fetchWidgets = async () => {
         // Check if we're in demo mode (frontend-only dev bypass)
-        const isDevBypass = localStorage.getItem('daemon_dev_bypass') === 'true';
+        const isDevBypass = localStorage.getItem('ersen_dev_bypass') === 'true';
 
         try {
             const { data } = await api.get('/widgets/active');
@@ -162,7 +162,7 @@ const Dashboard: React.FC = () => {
             console.log('Backend unavailable, using demo widgets');
             if (isDevBypass) {
                 // Try to load saved layout from localStorage first
-                const savedLayout = localStorage.getItem('daemon_demo_widgets');
+                const savedLayout = localStorage.getItem('ersen_demo_widgets');
                 if (savedLayout) {
                     try {
                         const parsed = JSON.parse(savedLayout);
@@ -202,7 +202,7 @@ const Dashboard: React.FC = () => {
         if (demoMode) {
             // Save to localStorage
             const remaining = widgets.filter(w => w.id !== id);
-            localStorage.setItem('daemon_demo_widgets', JSON.stringify(remaining));
+            localStorage.setItem('ersen_demo_widgets', JSON.stringify(remaining));
         } else {
             try {
                 await api.delete(`/widgets/active/${id}`);
@@ -256,7 +256,7 @@ const Dashboard: React.FC = () => {
                     position: w.position,
                     config: w.config
                 }));
-                localStorage.setItem('daemon_demo_widgets', JSON.stringify(savedWidgets));
+                localStorage.setItem('ersen_demo_widgets', JSON.stringify(savedWidgets));
                 console.log('Layout saved to localStorage');
             } else {
                 // Save all widget positions to backend

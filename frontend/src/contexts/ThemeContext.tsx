@@ -12,7 +12,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = 'daemon-theme';
+const THEME_STORAGE_KEY = 'ersen-theme';
 
 /**
  * Get system color scheme preference

@@ -1,18 +1,18 @@
 {
     "name": "ersen-backend",
     "version": "2.0.0",
-    "description": "DAEMON 2.0 - Modular Widget Hub Backend",
+    "description": "Ersen - Modular Widget Hub Backend",
     "main": "dist/index.js",
     "scripts": {
-        "dev": "tsx watch src/index.ts",
+        "dev": "bun --watch src/index.ts",
         "build": "tsc",
-        "start": "node dist/index.js",
+        "start": "bun dist/index.js",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
         "lint": "tsc --noEmit",
-        "db:migrate": "node -r dotenv/config scripts/migrate.js",
-        "db:seed": "node -r dotenv/config scripts/seed.js"
+        "db:migrate": "bun scripts/migrate.js",
+        "db:seed": "bun scripts/seed.js"
     },
     "dependencies": {
         "@workos-inc/node": "^7.74.2",

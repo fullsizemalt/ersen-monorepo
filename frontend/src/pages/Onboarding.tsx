@@ -42,7 +42,7 @@ const Onboarding: React.FC = () => {
             <div className="max-w-2xl w-full">
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                        Welcome to DAEMON
+                        Welcome to Ersen
                     </h1>
                     <p className="text-gray-400 text-lg">
                         Let's set up your personal dashboard. Choose your starter widgets:
@@ -55,13 +55,13 @@ const Onboarding: React.FC = () => {
                             key={widget.id}
                             onClick={() => toggleSelection(widget.id)}
                             className={`p-6 rounded-xl border cursor-pointer transition-all flex items-start gap-4 ${selected.includes(widget.id)
-                                    ? 'bg-blue-600/20 border-blue-500 shadow-lg shadow-blue-500/10'
-                                    : 'bg-gray-800 border-gray-700 hover:border-gray-600'
+                                ? 'bg-blue-600/20 border-blue-500 shadow-lg shadow-blue-500/10'
+                                : 'bg-gray-800 border-gray-700 hover:border-gray-600'
                                 }`}
                         >
                             <div className={`w-6 h-6 rounded-full flex items-center justify-center border flex-shrink-0 transition-colors ${selected.includes(widget.id)
-                                    ? 'bg-blue-500 border-blue-500 text-white'
-                                    : 'border-gray-500 text-transparent'
+                                ? 'bg-blue-500 border-blue-500 text-white'
+                                : 'border-gray-500 text-transparent'
                                 }`}>
                                 <Check size={14} strokeWidth={3} />
                             </div>

@@ -1,6 +1,6 @@
-# DAEMON 2.0 CLI
+# Ersen CLI
 
-The official command-line interface for DAEMON 2.0.
+The official command-line interface for Ersen.
 
 ## Installation
 
@@ -20,7 +20,7 @@ Compile the CLI into a single file you can drop anywhere:
 
 ```bash
 bun run compile
-./daemon dashboard
+./ersen dashboard
 ```
 
 ### Option 2: Using Node/NPM
@@ -35,10 +35,10 @@ npm link
 
 ### Login
 
-Authenticate with your DAEMON account.
+Authenticate with your Ersen account.
 
 ```bash
-daemon login
+ersen login
 ```
 
 ### Dashboard
@@ -46,14 +46,14 @@ daemon login
 View your widgets in the terminal. The CLI uses a rich **TUI (Terminal User Interface)** powered by Ink, featuring dynamic grid layouts and live widget updates.
 
 ```bash
-daemon dashboard
+ersen dashboard
 ```
 
 **Demo Mode**:
 Run the dashboard without connecting to the backend (offline mode).
 
 ```bash
-daemon dashboard --demo
+ersen dashboard --demo
 ```
 
 ## Development

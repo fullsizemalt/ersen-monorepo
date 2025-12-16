@@ -23,7 +23,7 @@ interface TimerContextType {
 
 const TimerContext = createContext<TimerContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'daemon_active_timers';
+const STORAGE_KEY = 'ersen_active_timers';
 
 /**
  * TimerProvider - Global timer state that persists across navigation
@@ -71,7 +71,7 @@ export const TimerProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return new Map();
     });
 
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     // Save to localStorage whenever timers change
     useEffect(() => {

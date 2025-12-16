@@ -26,7 +26,7 @@ const Login: React.FC = () => {
                         <Zap className="w-6 h-6 text-black" fill="currentColor" />
                     </div>
                     <h1 className="text-3xl font-bold mb-2 tracking-tight text-white">
-                        DAEMON
+                        Ersen
                     </h1>
                     <p className="text-zinc-500 text-sm tracking-wide">
                         Personal Operating System

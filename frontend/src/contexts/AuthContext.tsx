@@ -22,7 +22,7 @@ interface AuthContextType {
 // Mock user for frontend-only development (no backend needed)
 const MOCK_DEV_USER: User = {
     id: 1,
-    email: 'dev@daemon.local',
+    email: 'dev@ersen.local',
     name: 'Dev User',
     avatar_url: '',
     tier: 'pro', // Pro tier to see all widgets
@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const checkAuth = async () => {
         // Check for local dev bypass first
-        const localBypass = localStorage.getItem('daemon_dev_bypass');
+        const localBypass = localStorage.getItem('ersen_dev_bypass');
         if (localBypass === 'true') {
             console.log('🔧 Dev bypass active - using mock user');
             setUser(MOCK_DEV_USER);
@@ -81,13 +81,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
      */
     const localDevBypass = () => {
         console.log('🔧 Activating local dev bypass');
-        localStorage.setItem('daemon_dev_bypass', 'true');
+        localStorage.setItem('ersen_dev_bypass', 'true');
         setUser(MOCK_DEV_USER);
     };
 
     const logout = async () => {
         // Clear local bypass
-        localStorage.removeItem('daemon_dev_bypass');
+        localStorage.removeItem('ersen_dev_bypass');
 
         try {
             await api.post('/auth/logout');

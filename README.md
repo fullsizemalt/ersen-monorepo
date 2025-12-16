@@ -1,4 +1,4 @@
-# DAEMON 2.0 - Modular Widget Hub
+# Ersen - Modular Widget Hub
 
 > **For Next Agent**: This is a clean refactor of DAEMON (original in `../DAEMON`). We're building a monetized, modular widget platform with subscription tiers.
 
@@ -9,6 +9,7 @@
 **What This Is**: Privacy-first personal OS dashboard with 100+ modular widgets across subscription tiers.
 
 **Business Model**:
+
 - **Free**: 5 widget slots, 12 free widgets
 - **Standard**: $7/month, 20 slots, 42 widgets
 - **Pro**: $19/month, 50 slots, 100+ widgets
@@ -20,6 +21,7 @@
 ## Current Status
 
 ✅ **Phase 1 Started** - Foundation scaffolding complete:
+
 - Backend API structure (TypeScript + Express + PostgreSQL)
 - Frontend structure (React + Vite)
 - Database schema with subscriptions & widget catalog
@@ -28,6 +30,7 @@
 - 24 widget templates seeded
 
 ❌ **Not Yet Done**:
+
 - Frontend components (Login, Dashboard, Marketplace pages exist as stubs)
 - WorkOS account setup & configuration
 - Stripe account setup & product creation
@@ -53,8 +56,8 @@
 
 ```bash
 # 1. Install dependencies
-cd backend && npm install
-cd ../frontend && npm install
+cd backend && bun install
+cd ../frontend && bun install
 
 # 2. Configure environment
 cp .env.example .env
@@ -68,12 +71,12 @@ docker compose up postgres -d
 
 # 4. Run migrations
 cd backend
-npm run db:migrate   # Creates tables from schema.sql
-npm run db:seed      # Seeds widget catalog from seed-widgets.sql
+bun run db:migrate   # Creates tables from schema.sql
+bun run db:seed      # Seeds widget catalog from seed-widgets.sql
 
 # 5. Start dev servers
-npm run dev          # Backend on :3000
-cd ../frontend && npm run dev  # Frontend on :5173
+bun run dev          # Backend on :3000
+cd ../frontend && bun run dev  # Frontend on :5173
 ```
 
 ---
@@ -83,18 +86,21 @@ cd ../frontend && npm run dev  # Frontend on :5173
 ### API Endpoints
 
 **Authentication** (`/api/auth`):
+
 - `GET /google` - Redirect to Google OAuth
 - `GET /callback` - Handle OAuth callback
 - `GET /me` - Get current user
 - `POST /logout` - Clear session
 
 **Widgets** (`/api/widgets`):
+
 - `GET /catalog` - Browse widgets (tier-filtered)
 - `GET /active` - User's installed widgets
 - `POST /active` - Install widget
 - `DELETE /active/:id` - Uninstall widget
 
 **Subscriptions** (`/api/subscriptions`):
+
 - `POST /checkout` - Create Stripe checkout session
 - `GET /current` - Get user's subscription
 - `POST /webhook` - Handle Stripe events
@@ -102,6 +108,7 @@ cd ../frontend && npm run dev  # Frontend on :5173
 ### Database Schema
 
 **Core Tables**:
+
 - `users` - Email, name, avatar, workos_id
 - `sessions` - Token-based authentication
 - `subscriptions` - User's tier (free/standard/pro) + Stripe IDs
@@ -116,6 +123,7 @@ See `backend/schema.sql` for full schema.
 ## Phase 1 Tasks (Week 1-2)
 
 ### Backend
+
 - [x] Scaffold API structure
 - [x] Database schema
 - [x] WorkOS auth routes
@@ -125,6 +133,7 @@ See `backend/schema.sql` for full schema.
 - [ ] **TODO**: Test Stripe webhooks
 
 ### Frontend
+
 - [x] Project structure
 - [x] Design assets copied from DAEMON
 - [ ] **TODO**: Implement Login page with "Continue with Google"
@@ -134,6 +143,7 @@ See `backend/schema.sql` for full schema.
 - [ ] **TODO**: Create SubscriptionUpgrade component
 
 ### Setup
+
 - [ ] **TODO**: Create WorkOS account, configure Google OAuth
 - [ ] **TODO**: Create Stripe account, create products ($7, $19)
 - [ ] **TODO**: Get Stripe webhook signing secret
@@ -145,6 +155,7 @@ See `backend/schema.sql` for full schema.
 ## Key Documents
 
 **Planning & Specs**:
+
 - `docs/implementation_plan.md` - Full strategic plan (PWA vs native, WorkOS vs custom auth, competition analysis)
 - `docs/WIDGET_AUDIT.md` - Audit of 12 existing widgets
 - `docs/WIDGET_ENHANCEMENTS.md` - Pro-level widget specs (filtering, sorting, configs)
@@ -153,6 +164,7 @@ See `backend/schema.sql` for full schema.
 - `docs/DESIGN_SYSTEM.md` - UI/UX design system from DAEMON
 
 **Implementation**:
+
 - `docs/task.md` - Phase-by-phase task breakdown
 - `.env.example` - Required environment variables
 
@@ -161,12 +173,15 @@ See `backend/schema.sql` for full schema.
 ## Widget Catalog (Seeded)
 
 **Free Tier** (12 widgets):
+
 - task-manager, ai-assistant, sticky-notes, clock, weather, calculator, pomodoro, quote, habit-tracker, toybox, mood-tracker, heatmap
 
 **Standard Tier** (+7 widgets):
+
 - gmail, google-calendar, github, spotify, obsidian, kanban, music-download
 
 **Pro Tier** (+5 widgets):
+
 - grafana, prometheus, jellyfin, plex, audiobookshelf
 
 Total seeded: **24 widgets**. Target: **100+ widgets** by Phase 4.
@@ -175,24 +190,28 @@ Total seeded: **24 widgets**. Target: **100+ widgets** by Phase 4.
 
 ## Deployment Strategy
 
-**Phase 1-2**: Web only (PWA)
-- Deploy to daemon.runfoo.run
-- Users subscribe via Stripe (2.9% fee)
-- No app store fees
+**Production (ersen.xyz)**:
 
-**Phase 3**: Android app (free on Play Store)
-- Download free app
-- App syncs with web subscription
-- Native features unlock based on web tier
-- Avoids 30% Google Play tax
+- Frontend: Vercel (Auto-deploy from `main`)
+- Backend: Railway (Auto-deploy from `main`)
+- Database: Railway (PostgreSQL)
 
-**Phase 4**: iOS support (limited PWA features)
+**Development (daemon.runfoo.run)**:
+
+- Local/Dev environment accessible via VPN/Tunnel
+- Docker Compose for local full-stack
+
+**Monetization**:
+
+- Web Subscriptions via Stripe (Primary)
+- Free Android Companion App (Phase 3)
 
 ---
 
 ## Design Assets
 
 Copied from original DAEMON:
+
 - `design-assets/App.css` - Glassmorphic styles, blob animations
 - `design-assets/index.css` - Fonts (Space Grotesk, JetBrains Mono), base styles
 - `design-assets/*.png` - Logo, icons, splash screens

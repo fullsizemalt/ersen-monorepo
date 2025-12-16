@@ -4,9 +4,9 @@ import { GitPullRequest, GitMerge, AlertCircle, CheckCircle, ExternalLink } from
 
 const GithubWidget: React.FC<WidgetProps> = () => {
     const prs = [
-        { id: 1, title: 'feat: Add subscription flow', repo: 'daemon-app', status: 'open', author: 'ten' },
-        { id: 2, title: 'fix: Widget grid layout', repo: 'daemon-app', status: 'merged', author: 'ten' },
-        { id: 3, title: 'chore: Update dependencies', repo: 'daemon-backend', status: 'closed', author: 'bot' },
+        { id: 1, title: 'feat: Add subscription flow', repo: 'ersen-app', status: 'open', author: 'ten' },
+        { id: 2, title: 'fix: Widget grid layout', repo: 'ersen-app', status: 'merged', author: 'ten' },
+        { id: 3, title: 'chore: Update dependencies', repo: 'ersen-backend', status: 'closed', author: 'bot' },
     ];
 
     return (
@@ -26,7 +26,7 @@ const GithubWidget: React.FC<WidgetProps> = () => {
                     <div key={pr.id} className="group p-3 bg-gray-800/40 hover:bg-gray-800 rounded-lg border border-gray-800 hover:border-gray-700 transition-all cursor-pointer">
                         <div className="flex items-start gap-3">
                             <div className={`mt-1 ${pr.status === 'open' ? 'text-green-500' :
-                                    pr.status === 'merged' ? 'text-purple-500' : 'text-red-500'
+                                pr.status === 'merged' ? 'text-purple-500' : 'text-red-500'
                                 }`}>
                                 {pr.status === 'open' ? <AlertCircle size={16} /> :
                                     pr.status === 'merged' ? <GitMerge size={16} /> : <CheckCircle size={16} />}

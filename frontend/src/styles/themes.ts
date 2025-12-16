@@ -1,5 +1,5 @@
 /**
- * Theme System for DAEMON
+ * Theme System for Ersen
  * 
  * Architecture designed for:
  * - Built-in themes (Midnight, Daylight, etc.)
@@ -75,7 +75,7 @@ export const THEME_MIDNIGHT: Theme = {
     id: 'midnight',
     name: 'Midnight',
     description: 'Default dark theme with deep blues and purples',
-    author: 'DAEMON',
+    author: 'Ersen',
     version: '1.0.0',
     colors: {
         light: {
@@ -140,7 +140,7 @@ export const THEME_AURORA: Theme = {
     id: 'aurora',
     name: 'Aurora',
     description: 'Vibrant Northern Lights inspired theme',
-    author: 'DAEMON',
+    author: 'Ersen',
     version: '1.0.0',
     colors: {
         light: {
@@ -188,7 +188,7 @@ export const THEME_ROSE: Theme = {
     id: 'rose',
     name: 'Rosé',
     description: 'Soft pinks and warm tones',
-    author: 'DAEMON',
+    author: 'Ersen',
     version: '1.0.0',
     colors: {
         light: {

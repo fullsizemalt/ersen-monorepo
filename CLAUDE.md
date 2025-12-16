@@ -1,4 +1,4 @@
-# DAEMON2 Development Guidelines
+# Ersen Development Guidelines
 
 Auto-generated from all feature plans. Last updated: 2025-12-13
 
@@ -33,22 +33,22 @@ specs/             # Speckit specifications
 ```bash
 # Backend
 cd backend
-npm run dev          # Start dev server
-npm test             # Run Jest tests
-npm run lint         # TypeScript check
-npm run build        # Compile TypeScript
+bun run dev          # Start dev server
+bun test             # Run Jest tests
+bun run lint         # TypeScript check
+bun run build        # Compile TypeScript
 
 # Frontend
 cd frontend
-npm run dev          # Start Vite dev server
-npm test             # Run Vitest tests
-npm run lint         # TypeScript check
-npm run build        # Build for production
+bun run dev          # Start Vite dev server
+bun test             # Run Vitest tests
+bun run lint         # TypeScript check
+bun run build        # Build for production
 
 # Database
 cd backend
-npm run db:migrate   # Run migrations
-npm run db:seed      # Seed widget catalog
+bun run db:migrate   # Run migrations
+bun run db:seed      # Seed widget catalog
 ```
 
 ## Code Style

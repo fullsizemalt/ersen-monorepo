@@ -164,7 +164,7 @@ const DemoGallery: React.FC = () => {
     const [devicePreview, setDevicePreview] = useState<'desktop' | 'tablet' | 'phone'>('desktop');
 
     const applyLayout = (persona: DemoPersona) => {
-        localStorage.setItem('daemon_preferred_layout', JSON.stringify({
+        localStorage.setItem('ersen_preferred_layout', JSON.stringify({
             id: persona.id,
             widgets: persona.widgets,
         }));
@@ -325,8 +325,8 @@ const DemoGallery: React.FC = () => {
                         {/* Preview Area */}
                         <div className="p-6 bg-muted/30 overflow-auto max-h-[50vh]">
                             <div className={`mx-auto bg-background border border-border rounded-2xl p-4 transition-all duration-300 ${devicePreview === 'desktop' ? 'w-full' :
-                                    devicePreview === 'tablet' ? 'w-[600px]' :
-                                        'w-[320px]'
+                                devicePreview === 'tablet' ? 'w-[600px]' :
+                                    'w-[320px]'
                                 }`}>
                                 {/* Mock Dashboard Grid */}
                                 <div className={`grid gap-3 ${devicePreview === 'phone' ? 'grid-cols-2' : 'grid-cols-6'}`}>

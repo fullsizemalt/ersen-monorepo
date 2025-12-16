@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      FRONTEND_URL: https://daemon.runfoo.run
+      # We override the production labels for the dev environment
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.ersen-api-dev.rule=Host(`daemon.runfoo.run`) && (PathPrefix(`/api`) || PathPrefix(`/auth`))"
+      - "traefik.http.routers.ersen-api-dev.priority=100"
+      - "traefik.http.routers.ersen-api-dev.entrypoints=websecure"
+      - "traefik.http.routers.ersen-api-dev.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ersen-api-dev.loadbalancer.server.port=3000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: https://daemon.runfoo.run/api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.ersen-web-dev.rule=Host(`daemon.runfoo.run`)"
+      - "traefik.http.routers.ersen-web-dev.priority=10"
+      - "traefik.http.routers.ersen-web-dev.entrypoints=websecure"
+      - "traefik.http.routers.ersen-web-dev.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ersen-web-dev.loadbalancer.server.port=80"

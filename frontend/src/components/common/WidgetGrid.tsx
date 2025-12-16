@@ -6,7 +6,7 @@ import { getWidgetManifest } from '../widgets/registry';
 import { X, GripVertical, Move, Maximize2 } from 'lucide-react';
 
 // Apply width provider for responsive behavior
-const ResponsiveGridLayout = WidthProvider(Responsive);
+const ResponsiveGridLayout = WidthProvider(Responsive) as any;
 
 interface ActiveWidget {
     id: number;
@@ -192,8 +192,8 @@ const WidgetGrid: React.FC<WidgetGridProps> = ({
                             {/* Widget Container */}
                             <div
                                 className={`h-full w-full overflow-hidden rounded-xl sm:rounded-2xl border transition-all duration-200 ${isEditing
-                                        ? 'border-blue-500/50 bg-card shadow-lg shadow-blue-500/10 ring-1 ring-blue-500/20'
-                                        : 'border-border bg-card active:scale-[0.98] sm:hover:shadow-xl'
+                                    ? 'border-blue-500/50 bg-card shadow-lg shadow-blue-500/10 ring-1 ring-blue-500/20'
+                                    : 'border-border bg-card active:scale-[0.98] sm:hover:shadow-xl'
                                     }`}
                             >
                                 {/* Drag Handle (only in edit mode) */}

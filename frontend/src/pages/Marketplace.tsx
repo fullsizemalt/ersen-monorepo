@@ -11,15 +11,15 @@ import { WIDGET_CATEGORIES, WidgetCategory, WidgetManifest } from '../types/widg
 interface WidgetTemplate {
     slug: string;
     manifest: WidgetManifest;
-    installed: boolean;
+    deployed: boolean;
 }
 
 // Generate catalog from registry
-const generateCatalog = (installedSlugs: string[]): WidgetTemplate[] => {
+const generateCatalog = (deployedSlugs: string[]): WidgetTemplate[] => {
     return Object.entries(WIDGET_REGISTRY).map(([slug, manifest]) => ({
         slug,
         manifest,
-        installed: installedSlugs.includes(slug),
+        deployed: deployedSlugs.includes(slug),
     }));
 };
 
@@ -30,10 +30,10 @@ const Marketplace: React.FC = () => {
     // State
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<WidgetCategory | 'all'>('all');
-    const [installing, setInstalling] = useState<string | null>(null);
+    const [deploying, setDeploying] = useState<string | null>(null);
     const [showPricing, setShowPricing] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [installedSlugs, setInstalledSlugs] = useState<string[]>([]);
+    const [deployedSlugs, setDeployedSlugs] = useState<string[]>([]);
     const [viewMode, setViewMode] = useState<'grid' | 'compact'>('grid');
 
     const categories = getAllCategories();
@@ -45,7 +45,7 @@ const Marketplace: React.FC = () => {
     const fetchCatalog = async () => {
         try {
             const { data: widgets } = await api.get('/widgets/active');
-            setInstalledSlugs(widgets.map((w: any) => w.slug));
+            setDeployedSlugs(widgets.map((w: any) => w.slug));
             setTimeout(() => setLoading(false), 500);
         } catch (error) {
             console.error('Failed to fetch catalog data:', error);
@@ -53,23 +53,22 @@ const Marketplace: React.FC = () => {
         }
     };
 
-    const installWidget = async (slug: string) => {
-        setInstalling(slug);
+    const deployWidget = async (slug: string) => {
+        setDeploying(slug);
         try {
-            // Find template ID from backend or use slug directly
             const manifest = WIDGET_REGISTRY[slug];
             if (!manifest) return;
 
             await api.post('/widgets/active', { slug });
             navigate('/dashboard');
         } catch (error) {
-            console.error('Installation failed:', error);
+            console.error('Deploy failed:', error);
         } finally {
-            setInstalling(null);
+            setDeploying(null);
         }
     };
 
-    const catalog = generateCatalog(installedSlugs);
+    const catalog = generateCatalog(deployedSlugs);
 
     const filteredTemplates = catalog.filter(template => {
         const matchSearch = template.manifest.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -99,10 +98,10 @@ const Marketplace: React.FC = () => {
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
                         <Sparkles size={24} className="text-primary" />
-                        Widget Store
+                        Widget Library
                     </h1>
                     <p className="text-muted-foreground text-sm mt-1">
-                        {Object.keys(WIDGET_REGISTRY).length} widgets available • {installedSlugs.length} installed
+                        {Object.keys(WIDGET_REGISTRY).length} widgets available • {deployedSlugs.length} in config
                     </p>
                 </div>
 
@@ -189,8 +188,8 @@ const Marketplace: React.FC = () => {
                             key={template.slug}
                             template={template}
                             viewMode={viewMode}
-                            installing={installing === template.slug}
-                            onInstall={() => installWidget(template.slug)}
+                            deploying={deploying === template.slug}
+                            onDeploy={() => deployWidget(template.slug)}
                         />
                     ))
                 )}
@@ -217,12 +216,12 @@ const Marketplace: React.FC = () => {
 interface WidgetCardProps {
     template: WidgetTemplate;
     viewMode: 'grid' | 'compact';
-    installing: boolean;
-    onInstall: () => void;
+    deploying: boolean;
+    onDeploy: () => void;
 }
 
-const WidgetCard: React.FC<WidgetCardProps> = ({ template, viewMode, installing, onInstall }) => {
-    const { manifest, installed } = template;
+const WidgetCard: React.FC<WidgetCardProps> = ({ template, viewMode, deploying, onDeploy }) => {
+    const { manifest, deployed } = template;
     const isAvailable = manifest.available !== false;
     const catInfo = WIDGET_CATEGORIES[manifest.category];
 
@@ -236,16 +235,16 @@ const WidgetCard: React.FC<WidgetCardProps> = ({ template, viewMode, installing,
                 <h3 className="text-xs font-medium text-foreground truncate w-full">{manifest.name}</h3>
 
                 <button
-                    onClick={onInstall}
-                    disabled={!isAvailable || installing || installed}
-                    className={`mt-2 w-full py-1.5 rounded-lg text-[10px] font-medium transition-all ${installed
+                    onClick={onDeploy}
+                    disabled={!isAvailable || deploying || deployed}
+                    className={`mt-2 w-full py-1.5 rounded-lg text-[10px] font-medium transition-all ${deployed
                         ? 'bg-green-500/10 text-green-600 dark:text-green-400'
                         : !isAvailable
                             ? 'bg-muted text-muted-foreground cursor-not-allowed'
                             : 'bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground'
                         }`}
                 >
-                    {installing ? '...' : installed ? '✓' : isAvailable ? '+' : 'Soon'}
+                    {deploying ? '...' : deployed ? '✓' : isAvailable ? '+' : 'Soon'}
                 </button>
             </div>
         );
@@ -300,26 +299,26 @@ const WidgetCard: React.FC<WidgetCardProps> = ({ template, viewMode, installing,
                 <p className="text-muted-foreground text-xs mb-4 flex-1 line-clamp-2">{manifest.description}</p>
 
                 <button
-                    onClick={onInstall}
-                    disabled={installing || !isAvailable || installed}
+                    onClick={onDeploy}
+                    disabled={deploying || !isAvailable || deployed}
                     className={`w-full py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 ${!isAvailable
                         ? 'bg-muted text-muted-foreground cursor-not-allowed'
-                        : installed
+                        : deployed
                             ? 'bg-green-500/10 text-green-600 dark:text-green-400 cursor-default'
                             : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm shadow-primary/20'
                         }`}
                 >
-                    {installing ? (
-                        <span className="animate-pulse">Installing...</span>
-                    ) : installed ? (
+                    {deploying ? (
+                        <span className="animate-pulse">Adding...</span>
+                    ) : deployed ? (
                         <>
                             <Download size={16} />
-                            Installed
+                            In Config
                         </>
                     ) : isAvailable ? (
                         <>
                             <Plus size={16} />
-                            Add to Dashboard
+                            Add to Config
                         </>
                     ) : (
                         'Coming Soon'

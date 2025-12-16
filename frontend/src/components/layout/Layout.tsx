@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     const navItems = [
         { icon: LayoutGrid, label: 'Dashboard', path: '/dashboard' },
-        { icon: ShoppingBag, label: 'Marketplace', path: '/marketplace' },
+        { icon: ShoppingBag, label: 'Library', path: '/marketplace' },
         { icon: Sparkles, label: 'Demo Gallery', path: '/gallery' },
         { icon: Terminal, label: 'CLI Access', path: '/cli' },
     ];
@@ -47,7 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center shadow-lg shadow-red-900/20">
                         <Zap className="w-4 h-4 text-white" fill="currentColor" />
                     </div>
-                    <span className="font-bold text-lg tracking-tight">DAEMON</span>
+                    <span className="font-bold text-lg tracking-tight">Ersen</span>
                 </div>
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -85,7 +85,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         </div>
                         {!isCollapsed && (
                             <div className="overflow-hidden whitespace-nowrap">
-                                <h1 className="font-bold text-xl tracking-tight leading-none">DAEMON</h1>
+                                <h1 className="font-bold text-xl tracking-tight leading-none">Ersen</h1>
                                 <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">v2.0.0</span>
                             </div>
                         )}

@@ -9,7 +9,7 @@
 
 ## Reporting a Vulnerability
 
-We take security seriously at DAEMON 2.0. If you discover a security vulnerability, please report it responsibly.
+We take security seriously at Ersen. If you discover a security vulnerability, please report it responsibly.
 
 ### How to Report
 

@@ -14,8 +14,8 @@
     "@types/react-grid-layout": "^1.3.2"
   },
   "scripts": {
-    "dev:frontend": "npm run dev -w frontend",
-    "dev:backend": "npm run dev -w backend",
+    "dev:frontend": "bun run dev -w frontend",
+    "dev:backend": "bun run dev -w backend",
     "dev": "bun run --parallel dev:backend dev:frontend",
     "build:backend": "bun run build -w ersen-backend",
     "start:backend": "bun run start -w ersen-backend",
