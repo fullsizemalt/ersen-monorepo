@@ -101,6 +101,42 @@ const WidgetGrid: React.FC<WidgetGridProps> = ({
     // Get current row height based on breakpoint
     const rowHeight = ROW_HEIGHT[currentBreakpoint as keyof typeof ROW_HEIGHT] || 180;
 
+    // Keyboard navigation handler
+    const handleKeyDown = (e: React.KeyboardEvent, widgetId: number) => {
+        if (!isEditing) return;
+
+        const currentLayout = layouts[currentBreakpoint] || [];
+        const widgetLayout = currentLayout.find(l => l.i === String(widgetId));
+
+        if (!widgetLayout) return;
+
+        let deltaX = 0;
+        let deltaY = 0;
+
+        switch (e.key) {
+            case 'ArrowUp': deltaY = -1; break;
+            case 'ArrowDown': deltaY = 1; break;
+            case 'ArrowLeft': deltaX = -1; break;
+            case 'ArrowRight': deltaX = 1; break;
+            default: return; // Allow other keys
+        }
+
+        e.preventDefault();
+
+        // Constrain to grid bounds
+        const cols = COLS[currentBreakpoint as keyof typeof COLS];
+        const newX = Math.max(0, Math.min(cols - widgetLayout.w, widgetLayout.x + deltaX));
+        const newY = Math.max(0, widgetLayout.y + deltaY);
+
+        if (newX === widgetLayout.x && newY === widgetLayout.y) return;
+
+        const newLayout = currentLayout.map(l =>
+            l.i === String(widgetId) ? { ...l, x: newX, y: newY } : l
+        );
+
+        handleLayoutChange(newLayout, { ...layouts, [currentBreakpoint]: newLayout });
+    };
+
     if (!mounted) {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -118,7 +154,7 @@ const WidgetGrid: React.FC<WidgetGridProps> = ({
         <div className="widget-grid-container -mx-2 sm:mx-0">
             {/* Edit mode instructions */}
             {isEditing && (
-                <div className="mb-4 flex items-center gap-4 text-xs text-muted-foreground animate-fade-in">
+                <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-muted-foreground animate-fade-in">
                     <div className="flex items-center gap-1.5">
                         <Move size={14} className="text-blue-400" />
                         <span>Drag to move</span>
@@ -126,6 +162,10 @@ const WidgetGrid: React.FC<WidgetGridProps> = ({
                     <div className="flex items-center gap-1.5">
                         <Maximize2 size={14} className="text-blue-400" />
                         <span>Drag corner to resize</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 border-l border-white/10 pl-4">
+                        <span className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] font-mono">ARROWS</span>
+                        <span>Keyboard move</span>
                     </div>
                 </div>
             )}
@@ -182,7 +222,11 @@ const WidgetGrid: React.FC<WidgetGridProps> = ({
                     return (
                         <div
                             key={String(widget.id)}
-                            className={`relative group ${isEditing ? 'cursor-move' : ''}`}
+                            className={`relative group ${isEditing ? 'cursor-move focus-visible:ring-2 focus-visible:ring-primary focus-visible:z-30 rounded-xl' : ''}`}
+                            tabIndex={isEditing ? 0 : -1}
+                            onKeyDown={(e) => handleKeyDown(e, widget.id)}
+                            aria-label={isEditing ? `${widget.name}. Press Arrow Keys to move.` : undefined}
+                            role={isEditing ? "article" : undefined}
                         >
                             {/* Widget Container - Aura Linear Style */}
                             <div
