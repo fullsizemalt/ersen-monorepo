@@ -24,13 +24,37 @@ const DEMO_WIDGETS: ActiveWidget[] = [
 ];
 
 // Layout templates from Demo Gallery personas
-const LAYOUT_TEMPLATES: Record<string, { widgets: Array<{ slug: string; x: number; y: number; w: number; h: number }> }> = {
+const LAYOUT_TEMPLATES: Record<string, { widgets: Array<{ slug: string; x: number; y: number; w: number; h: number; config?: Record<string, any> }> }> = {
     sysadmin: {
         widgets: [
             { slug: 'system-info', x: 0, y: 0, w: 2, h: 2 },
             { slug: 'clock', x: 2, y: 0, w: 2, h: 1 },
             { slug: 'quick-links', x: 2, y: 1, w: 2, h: 2 },
             { slug: 'weather', x: 4, y: 0, w: 2, h: 2 },
+        ],
+    },
+    commuter: {
+        widgets: [
+            { slug: 'flip-board', x: 0, y: 0, w: 4, h: 2, config: { title: 'TRANSIT' } },
+            { slug: 'weather', x: 4, y: 0, w: 2, h: 2 },
+            { slug: 'quick-links', x: 0, y: 2, w: 2, h: 2 },
+            { slug: 'clock', x: 2, y: 2, w: 2, h: 1 },
+        ],
+    },
+    receptionist: {
+        widgets: [
+            { slug: 'photo-frame', x: 0, y: 0, w: 2, h: 2 },
+            { slug: 'sticky-notes', x: 2, y: 0, w: 2, h: 2, config: { content: '👋 Welcome to Ersen HQ!\nWiFi: Guest-Network\nPass: welcome123' } },
+            { slug: 'qr-code', x: 4, y: 0, w: 2, h: 2, config: { initialValue: 'WIFI:S:ErsenGuest;T:WPA;P:password123;;', initialLabel: 'Guest Wi-Fi' } },
+            { slug: 'clock', x: 0, y: 2, w: 4, h: 2 },
+        ],
+    },
+    streamer: {
+        widgets: [
+            { slug: 'stream-tools', x: 0, y: 0, w: 4, h: 3 },
+            { slug: 'spotify', x: 4, y: 0, w: 2, h: 2 },
+            { slug: 'system-info', x: 4, y: 2, w: 2, h: 2 },
+            { slug: 'clock', x: 0, y: 3, w: 2, h: 1 },
         ],
     },
     homechef: {
@@ -127,7 +151,7 @@ const Dashboard: React.FC = () => {
                 id: Date.now() + index,
                 name: manifest?.name || w.slug,
                 slug: w.slug,
-                config: {},
+                config: w.config || {},
                 position: { x: w.x, y: w.y, w: w.w, h: w.h },
             };
         });
