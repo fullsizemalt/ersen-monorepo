@@ -118,9 +118,18 @@ const Dashboard: React.FC = () => {
     const [widgets, setWidgets] = useState<ActiveWidget[]>([]);
     const [isEditing, setIsEditing] = useState(false);
     const [showPricing, setShowPricing] = useState(false);
-    // ...
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [demoMode, setDemoMode] = useState(false);
+    const [widgetToDelete, setWidgetToDelete] = useState<ActiveWidget | null>(null);
+    const [appliedTemplate, setAppliedTemplate] = useState<string | null>(null);
+
     const [showVoice, setShowVoice] = useState(false);
     const { isListening, transcript, startListening } = useVoiceControl(showVoice);
+
+    useEffect(() => {
+        fetchWidgets();
+    }, []);
 
     const handleVoiceClick = () => {
         if (user?.tier !== 'pro') {
@@ -131,7 +140,40 @@ const Dashboard: React.FC = () => {
         startListening();
     };
 
-    // ... existing functions ...
+    const fetchWidgets = async () => {
+        // Check if we're in demo mode (frontend-only dev bypass)
+        const isDevBypass = localStorage.getItem('ersen_dev_bypass') === 'true';
+
+        try {
+            const { data } = await api.get('/widgets/active');
+            setWidgets(data);
+            setDemoMode(false);
+        } catch (error) {
+            console.log('Backend unavailable, using demo widgets');
+            if (isDevBypass) {
+                // Try to load saved layout from localStorage first
+                const savedLayout = localStorage.getItem('ersen_demo_widgets');
+                if (savedLayout) {
+                    try {
+                        const parsed = JSON.parse(savedLayout);
+                        // Merge saved positions with demo widgets
+                        const mergedWidgets = DEMO_WIDGETS.map(dw => {
+                            const saved = parsed.find((s: any) => s.id === dw.id || s.slug === dw.slug);
+                            return saved ? { ...dw, position: saved.position, config: saved.config } : dw;
+                        });
+                        setWidgets(mergedWidgets);
+                    } catch {
+                        setWidgets(DEMO_WIDGETS);
+                    }
+                } else {
+                    setWidgets(DEMO_WIDGETS);
+                }
+                setDemoMode(true);
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-background text-foreground p-4 sm:p-6 lg:p-8 font-sans selection:bg-primary/20">
