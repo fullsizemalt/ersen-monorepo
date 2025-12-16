@@ -3,7 +3,7 @@ import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import { getWidgetManifest } from '../widgets/registry';
-import { X, GripVertical, Move, Maximize2, AlertTriangle, RefreshCw } from 'lucide-react';
+import { X, GripVertical, Move, Maximize2 } from 'lucide-react';
 import { WidgetErrorBoundary, WidgetLoadingFallback } from '../widgets/WidgetWrapper';
 
 // Apply width provider for responsive behavior
