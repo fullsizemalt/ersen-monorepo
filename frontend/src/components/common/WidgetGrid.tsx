@@ -9,13 +9,7 @@ import { WidgetErrorBoundary, WidgetLoadingFallback } from '../widgets/WidgetWra
 // Apply width provider for responsive behavior
 const ResponsiveGridLayout = WidthProvider(Responsive) as any;
 
-interface ActiveWidget {
-    id: number;
-    name: string;
-    slug: string;
-    config: Record<string, unknown>;
-    position: { x: number; y: number; w: number; h: number };
-}
+import { ActiveWidget } from '../../types/widget';
 
 interface WidgetGridProps {
     widgets: ActiveWidget[];

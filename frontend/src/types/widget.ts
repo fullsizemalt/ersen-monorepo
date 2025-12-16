@@ -34,6 +34,14 @@ export interface WidgetProps {
     onConfigChange: (newConfig: WidgetConfig) => void;
 }
 
+export interface ActiveWidget {
+    id: number;
+    name: string;
+    slug: string;
+    config: Record<string, unknown>;
+    position: { x: number; y: number; w: number; h: number };
+}
+
 export interface WidgetManifest {
     slug: string;
     name: string;

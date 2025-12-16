@@ -9,14 +9,7 @@ import PricingModal from '../components/subscription/PricingModal';
 import WidgetGrid from '../components/common/WidgetGrid';
 import { Skeleton } from '@/components/ui/skeleton';
 import { WIDGET_REGISTRY } from '../components/widgets/registry';
-
-interface ActiveWidget {
-    id: number;
-    name: string;
-    slug: string;
-    config: Record<string, unknown>;
-    position: { x: number; y: number; w: number; h: number };
-}
+import { ActiveWidget } from '../types/widget';
 
 // Demo widgets for frontend-only testing
 const DEMO_WIDGETS: ActiveWidget[] = [

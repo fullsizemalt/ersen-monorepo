@@ -14,6 +14,8 @@ import PrivateRoute from './components/layout/PrivateRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
+import GuestDashboard from './pages/GuestDashboard';
+
 const App: React.FC = () => {
     return (
         <ThemeProvider>
@@ -21,6 +23,7 @@ const App: React.FC = () => {
                 <AuthProvider>
                     <Router>
                         <Routes>
+                            <Route path="/" element={<GuestDashboard />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/demos" element={
                                 <ErrorBoundary>
@@ -41,7 +44,7 @@ const App: React.FC = () => {
                                 } />
                             </Route>
 
-                            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
                         </Routes>
                     </Router>
                 </AuthProvider>
