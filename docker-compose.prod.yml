@@ -25,6 +25,8 @@ services:
       - traefik_letsencrypt:/letsencrypt
     networks:
       - traefik-public
+    environment:
+      - DOCKER_API_VERSION=1.44
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
