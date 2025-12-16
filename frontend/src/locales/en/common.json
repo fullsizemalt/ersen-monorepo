@@ -1,0 +1,23 @@
+{
+    "auth": {
+        "login_google": "Continue with Google",
+        "login_github": "Continue with GitHub",
+        "demo_mode": "Try Demo Mode",
+        "logout": "Log Out"
+    },
+    "buttons": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "confirm": "Confirm",
+        "customize": "Customize",
+        "done": "Done",
+        "upgrade": "Upgrade Plan"
+    },
+    "status": {
+        "loading": "Loading...",
+        "saving": "Saving...",
+        "offline": "Offline",
+        "live": "LIVE"
+    }
+}

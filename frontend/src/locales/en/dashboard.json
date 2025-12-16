@@ -1,0 +1,17 @@
+{
+    "header": {
+        "default_title": "My Workspace",
+        "ready": "Ready",
+        "editing": "Editing Layout"
+    },
+    "empty_state": {
+        "no_widgets": "No widgets installed yet.",
+        "add_hint": "Add some widgets from the marketplace to get started.",
+        "browse_marketplace": "Browse Marketplace"
+    },
+    "banners": {
+        "demo_active": "Demo Mode Active",
+        "demo_desc": "Showing sample widgets - no backend connected",
+        "layout_applied": "Layout Applied: {{name}}"
+    }
+}

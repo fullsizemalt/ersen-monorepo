@@ -1,0 +1,19 @@
+{
+    "flip_board": {
+        "departures": "DEPARTURES",
+        "local_time": "LOCAL TIME",
+        "status_ontime": "ON TIME"
+    },
+    "streamer": {
+        "title_label": "Stream Title",
+        "viewers": "Viewers",
+        "bitrate": "Bitrate",
+        "go_live": "Go Live",
+        "end_stream": "End Stream",
+        "tweet": "Tweet"
+    },
+    "qr_code": {
+        "wifi_label": "Guest Wi-Fi",
+        "data_placeholder": "Data / URL / WiFi String"
+    }
+}
