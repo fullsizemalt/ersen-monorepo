@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { WidgetProps } from '../../../types/widget';
 import CanvasScreensaver from '../../common/CanvasScreensaver';
-import { Play, Settings2 } from 'lucide-react';
 
 type EffectType = 'dvd' | 'starfield' | 'matrix';
 
@@ -22,7 +21,7 @@ const ScreensaverWidget: React.FC<WidgetProps> = () => {
     // Matrix Logic
     const drops = useMemo(() => new Array(100).fill(1).map(() => Math.random() * -100), []);
 
-    const draw = (ctx: CanvasRenderingContext2D, width: number, height: number, frame: number) => {
+    const draw = (ctx: CanvasRenderingContext2D, width: number, height: number, _frame: number) => {
         // Clear background based on effect
         ctx.fillStyle = effect === 'matrix' ? 'rgba(0, 0, 0, 0.05)' : 'black';
         ctx.fillRect(0, 0, width, height);
