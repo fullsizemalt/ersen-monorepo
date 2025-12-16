@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, Suspense } from 'react';
 import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import { getWidgetManifest } from '../widgets/registry';
-import { X, GripVertical, Move, Maximize2 } from 'lucide-react';
+import { X, GripVertical, Move, Maximize2, AlertTriangle, RefreshCw } from 'lucide-react';
+import { WidgetErrorBoundary, WidgetLoadingFallback } from '../widgets/WidgetWrapper';
 
 // Apply width provider for responsive behavior
 const ResponsiveGridLayout = WidthProvider(Responsive) as any;
@@ -208,12 +209,16 @@ const WidgetGrid: React.FC<WidgetGridProps> = ({
 
                                 {/* Widget Content */}
                                 <div className={`h-full ${isEditing ? 'pointer-events-none opacity-80' : ''}`}>
-                                    <Component
-                                        id={widget.id}
-                                        config={widget.config || {}}
-                                        isEditing={isEditing}
-                                        onConfigChange={(newConfig) => onConfigChange(widget.id, newConfig)}
-                                    />
+                                    <WidgetErrorBoundary widgetTitle={widget.name || widget.slug}>
+                                        <Suspense fallback={<WidgetLoadingFallback />}>
+                                            <Component
+                                                id={widget.id}
+                                                config={widget.config || {}}
+                                                isEditing={isEditing}
+                                                onConfigChange={(newConfig) => onConfigChange(widget.id, newConfig)}
+                                            />
+                                        </Suspense>
+                                    </WidgetErrorBoundary>
                                 </div>
                             </div>
 
