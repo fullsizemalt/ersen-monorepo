@@ -25,7 +25,9 @@ export type WidgetTag =
     | 'aesthetic'
     | 'streaming'
     | 'productivity'
-    | 'mobile';
+    | 'mobile'
+    | 'audio'
+    | 'premium';
 
 export interface WidgetConfig {
     [key: string]: any;
