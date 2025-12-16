@@ -3,7 +3,6 @@ import DeleteConfirmDialog from '../components/common/DeleteConfirmDialog';
 import { Layout } from 'react-grid-layout';
 import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
-import { Link } from 'react-router-dom';
 import { Settings, Check, Plus, Sparkles } from 'lucide-react';
 import LanguageSwitcher from '../components/common/LanguageSwitcher';
 import PricingModal from '../components/subscription/PricingModal';
