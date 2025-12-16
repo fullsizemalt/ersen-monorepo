@@ -1,0 +1,122 @@
+version: '3.8'
+
+# Production docker-compose for Hetzner VPS
+# Includes Traefik reverse proxy with automatic SSL
+
+services:
+  # Traefik Reverse Proxy
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@ersen.xyz}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_letsencrypt:/letsencrypt
+    networks:
+      - traefik-public
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.ersen.xyz`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH:-}"
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ersen
+      POSTGRES_USER: ersen
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ersen-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ersen"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://ersen:${DB_PASSWORD}@db:5432/ersen
+      NODE_ENV: production
+      JWT_SECRET: ${JWT_SECRET}
+      FRONTEND_URL: https://ersen.xyz
+      WORKOS_API_KEY: ${WORKOS_API_KEY}
+      WORKOS_CLIENT_ID: ${WORKOS_CLIENT_ID}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      STRIPE_PRICE_STANDARD: ${STRIPE_PRICE_STANDARD}
+      STRIPE_PRICE_PRO: ${STRIPE_PRICE_PRO}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - ersen-network
+      - traefik-public
+    restart: unless-stopped
+    command: sh -c "npm run db:migrate && npm run db:seed && npm start"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.ersen-api.rule=Host(`api.ersen.xyz`)"
+      - "traefik.http.routers.ersen-api.entrypoints=websecure"
+      - "traefik.http.routers.ersen-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ersen-api.loadbalancer.server.port=3000"
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: https://api.ersen.xyz
+    networks:
+      - ersen-network
+      - traefik-public
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.ersen-web.rule=Host(`ersen.xyz`) || Host(`www.ersen.xyz`)"
+      - "traefik.http.routers.ersen-web.entrypoints=websecure"
+      - "traefik.http.routers.ersen-web.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ersen-web.loadbalancer.server.port=80"
+
+networks:
+  ersen-network:
+    driver: bridge
+  traefik-public:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  traefik_letsencrypt:
