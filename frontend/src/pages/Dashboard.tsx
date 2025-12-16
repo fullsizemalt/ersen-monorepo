@@ -175,6 +175,98 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const handleDeleteRequest = (id: number) => {
+        const widget = widgets.find(w => w.id === id);
+        if (widget) {
+            setWidgetToDelete(widget);
+        }
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!widgetToDelete) return;
+        const id = widgetToDelete.id;
+
+        // Optimistic update - remove immediately
+        setWidgets(prev => prev.filter(w => w.id !== id));
+
+        if (demoMode) {
+            // Save to localStorage
+            const remaining = widgets.filter(w => w.id !== id);
+            localStorage.setItem('ersen_demo_widgets', JSON.stringify(remaining));
+        } else {
+            try {
+                await api.delete(`/widgets/active/${id}`);
+            } catch (error) {
+                console.error('Failed to delete widget', error);
+            }
+        }
+        setWidgetToDelete(null);
+    };
+
+    const handleConfigChange = async (id: number, newConfig: Record<string, unknown>) => {
+        try {
+            // Optimistic update
+            setWidgets(prev => prev.map(w =>
+                w.id === id ? { ...w, config: newConfig } : w
+            ));
+            await api.patch(`/widgets/active/${id}`, { config: newConfig });
+        } catch (error) {
+            console.error('Failed to update widget config', error);
+        }
+    };
+
+    const handleLayoutChange = useCallback(async (layout: Layout[]) => {
+        // Update local state with new positions
+        setWidgets(prev => prev.map(widget => {
+            const layoutItem = layout.find(l => l.i === String(widget.id));
+            if (layoutItem) {
+                return {
+                    ...widget,
+                    position: {
+                        x: layoutItem.x,
+                        y: layoutItem.y,
+                        w: layoutItem.w,
+                        h: layoutItem.h,
+                    }
+                };
+            }
+            return widget;
+        }));
+    }, []);
+
+    const saveLayout = async () => {
+        setSaving(true);
+
+        try {
+            if (demoMode) {
+                // In demo mode, save to localStorage
+                const savedWidgets = widgets.map(w => ({
+                    id: w.id,
+                    slug: w.slug,
+                    position: w.position,
+                    config: w.config
+                }));
+                localStorage.setItem('ersen_demo_widgets', JSON.stringify(savedWidgets));
+            } else {
+                // Save all widget positions to backend
+                await Promise.all(widgets.map(widget =>
+                    api.patch(`/widgets/active/${widget.id}`, {
+                        position: widget.position
+                    })
+                ));
+            }
+        } catch (error) {
+            console.error('Failed to save layout', error);
+        } finally {
+            setSaving(false);
+            setIsEditing(false); // Always exit editing mode
+        }
+    };
+
+    const handleFinishEditing = () => {
+        saveLayout();
+    };
+
     return (
         <div className="min-h-screen bg-background text-foreground p-4 sm:p-6 lg:p-8 font-sans selection:bg-primary/20">
             <PricingModal isOpen={showPricing} onClose={() => setShowPricing(false)} />
