@@ -110,6 +110,10 @@ The application follows a strict design language to ensure premium quality.
   - **Function**: Drag & drop file conversion (e.g., HEIC to JPG, PDF to Doc, WebP to PNG).
   - **Implementation**: WASM-based (ffmpeg.wasm) for privacy/local processing, or cloud-based for heavy lifting.
   - **UI**: Minimalist drop zone with progress rings.
+- **Background Audio (`widget-ambiance`)**:
+  - **Function**: High-quality ambient noise generator for focus/relaxation.
+  - **Modes**: White/Pink/Brown noise, Crackling Fire, Thunderstorm, Coffee Shop.
+  - **UI**: Slider controls for mixing sounds (e.g., 50% Rain + 20% Thunder).
 
 ### Phase C: Community & Arcade
 
