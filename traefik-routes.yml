@@ -1,4 +1,23 @@
 http:
+  # Rate Limiting Middlewares
+  middlewares:
+    api-ratelimit:
+      rateLimit:
+        average: 100         # Average requests per second
+        burst: 200           # Maximum burst
+        period: 1m           # Sliding window period
+        sourceCriterion:
+          ipStrategy:
+            depth: 1         # Use X-Forwarded-For header
+    api-ratelimit-strict:
+      rateLimit:
+        average: 10          # Strict limit for sensitive endpoints
+        burst: 20
+        period: 1m
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+  
   routers:
     ersen-web:
       rule: "Host(`ersen.xyz`) || Host(`www.ersen.xyz`)"
@@ -12,8 +31,11 @@ http:
       service: ersen-backend
       entryPoints:
         - websecure
+      middlewares:
+        - api-ratelimit
       tls:
         certResolver: letsencrypt
+  
   services:
     ersen-frontend:
       loadBalancer:
