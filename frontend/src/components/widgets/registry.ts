@@ -43,6 +43,16 @@ const BreathingWidget = React.lazy(() => import('./breathing/BreathingWidget'));
 const AgeWidget = React.lazy(() => import('./age-calculator/AgeWidget'));
 const QuickLinksWidget = React.lazy(() => import('./quick-links/QuickLinksWidget'));
 const AuthenticatorWidget = React.lazy(() => import('./authenticator/AuthenticatorWidget'));
+const QrCodeWidget = React.lazy(() => import('./qr-code/QrCodeWidget'));
+
+// Visual & Aesthetic
+const FlipBoardWidget = React.lazy(() => import('./retro-flip/FlipBoardWidget'));
+const PhotoFrameWidget = React.lazy(() => import('./photo-frame/PhotoFrameWidget'));
+const ScreensaverWidget = React.lazy(() => import('./screensaver/ScreensaverWidget'));
+
+// specialized
+const StreamerToolsWidget = React.lazy(() => import('./streamer-tools/StreamerToolsWidget'));
+
 
 // Games
 const Magic8BallWidget = React.lazy(() => import('./magic-8-ball/Magic8BallWidget'));
@@ -441,6 +451,74 @@ export const WIDGET_REGISTRY: Record<string, WidgetManifest> = {
         supportedSizes: [{ w: 2, h: 2 }, { w: 4, h: 2 }],
         component: CryptoTrackerWidget,
         available: false,
+    },
+
+    // ═══════════════════════════════════════════════════════════════════
+    // VISUAL & AESTHETIC (NEW)
+    // ═══════════════════════════════════════════════════════════════════
+    'flip-board': {
+        slug: 'flip-board',
+        name: 'Retro Board',
+        description: 'Solari style clock',
+        icon: '🗓️',
+        category: 'entertainment',
+        tags: ['aesthetic', 'time'],
+        tier: 'free',
+        defaultSize: { w: 4, h: 2 },
+        supportedSizes: [{ w: 4, h: 2 }, { w: 6, h: 2 }],
+        component: FlipBoardWidget,
+    },
+    'photo-frame': {
+        slug: 'photo-frame',
+        name: 'Photo Frame',
+        description: 'Digital gallery',
+        icon: '🖼️',
+        category: 'entertainment',
+        tags: ['aesthetic', 'media'],
+        tier: 'free',
+        defaultSize: { w: 2, h: 2 },
+        supportedSizes: [{ w: 2, h: 2 }, { w: 4, h: 4 }],
+        component: PhotoFrameWidget,
+    },
+    'screensaver': {
+        slug: 'screensaver',
+        name: 'Screensaver',
+        description: 'Idle animations',
+        icon: '🖥️',
+        category: 'entertainment',
+        tags: ['aesthetic', 'fun'],
+        tier: 'free',
+        defaultSize: { w: 4, h: 3 },
+        supportedSizes: [{ w: 4, h: 3 }, { w: 6, h: 4 }],
+        component: ScreensaverWidget,
+    },
+
+    // ═══════════════════════════════════════════════════════════════════
+    // SPECIALIZED (NEW)
+    // ═══════════════════════════════════════════════════════════════════
+    'streamer-tools': {
+        slug: 'streamer-tools',
+        name: 'Streamer Tools',
+        description: 'Twitch & System',
+        icon: '📡',
+        category: 'tools',
+        tags: ['streaming', 'utility'],
+        tier: 'free',
+        defaultSize: { w: 2, h: 3 },
+        supportedSizes: [{ w: 2, h: 3 }, { w: 4, h: 3 }],
+        component: StreamerToolsWidget,
+    },
+    'qr-code': {
+        slug: 'qr-code',
+        name: 'QR Code',
+        description: 'Share Wi-Fi/Links',
+        icon: '📱',
+        category: 'tools',
+        tags: ['utility', 'social'],
+        tier: 'free',
+        defaultSize: { w: 2, h: 2 },
+        supportedSizes: [{ w: 2, h: 2 }],
+        component: QrCodeWidget,
     },
 
     // ═══════════════════════════════════════════════════════════════════

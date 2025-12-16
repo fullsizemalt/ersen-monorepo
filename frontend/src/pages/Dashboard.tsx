@@ -324,24 +324,27 @@ const Dashboard: React.FC = () => {
                 </div>
             )}
 
-            {/* Header */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* Header - Refined */}
+            <div className="flex flex-col md:flex-row justify-between items-end gap-4 pb-6 border-b border-border/40">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-                    <p className="text-muted-foreground text-sm">
-                        {isEditing
-                            ? '✨ Drag widgets to reposition, drag corners to resize'
-                            : 'Manage your personal operating system.'}
+                    <h1 className="text-4xl font-light tracking-tight text-foreground/90">
+                        {appliedTemplate ? (
+                            <span className="capitalize">{appliedTemplate}</span>
+                        ) : (
+                            "My Workspace"
+                        )}
+                    </h1>
+                    <p className="text-muted-foreground/60 text-sm mt-1 font-mono tracking-wide uppercase">
+                        {isEditing ? 'Editing Layout' : 'Ready'}
                     </p>
                 </div>
 
-                <div className="flex gap-3 items-center">
+                <div className="flex gap-4 items-center">
                     {user?.tier !== 'pro' && (
                         <button
                             onClick={() => setShowPricing(true)}
-                            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 rounded-lg text-white font-bold shadow-lg shadow-red-500/20 transition-all hover:scale-105 text-sm"
+                            className="text-xs text-muted-foreground/50 hover:text-primary transition-colors hover:underline underline-offset-4"
                         >
-                            <Zap size={16} fill="currentColor" />
                             Upgrade Plan
                         </button>
                     )}
@@ -349,19 +352,19 @@ const Dashboard: React.FC = () => {
                     <button
                         onClick={() => isEditing ? handleFinishEditing() : setIsEditing(true)}
                         disabled={saving}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-sm font-medium ${isEditing
-                            ? 'bg-green-600 hover:bg-green-700 text-white'
-                            : 'bg-white/5 hover:bg-white/10 text-zinc-300'
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 text-sm font-medium border ${isEditing
+                            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500 hover:bg-emerald-500/20'
+                            : 'bg-transparent border-transparent hover:border-border hover:bg-muted/50 text-muted-foreground hover:text-foreground'
                             } ${saving ? 'opacity-50 cursor-wait' : ''}`}
                     >
                         {isEditing ? (
                             <>
-                                <Check size={16} />
-                                {saving ? 'Saving...' : 'Done Editing'}
+                                <Check size={14} />
+                                {saving ? 'Saving...' : 'Done'}
                             </>
                         ) : (
                             <>
-                                <Settings size={16} />
+                                <Settings size={14} />
                                 Customize
                             </>
                         )}

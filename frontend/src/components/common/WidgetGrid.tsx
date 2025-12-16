@@ -184,25 +184,27 @@ const WidgetGrid: React.FC<WidgetGridProps> = ({
                             key={String(widget.id)}
                             className={`relative group ${isEditing ? 'cursor-move' : ''}`}
                         >
-                            {/* Widget Container */}
+                            {/* Widget Container - Aura Linear Style */}
                             <div
-                                className={`h-full w-full overflow-hidden rounded-xl sm:rounded-2xl border transition-all duration-200 ${isEditing
-                                    ? 'border-blue-500/50 bg-card shadow-lg shadow-blue-500/10 ring-1 ring-blue-500/20'
-                                    : 'border-border bg-card active:scale-[0.98] sm:hover:shadow-xl'
-                                    }`}
+                                className={`
+                                    h-full w-full 
+                                    rounded-[var(--radius)] 
+                                    transition-all duration-200 ease-out
+                                    ${isEditing
+                                        ? 'bg-background border-2 border-primary/20 shadow-sm scale-[0.98]'
+                                        : 'bg-card/30 border border-white/5 hover:border-white/10 hover:bg-card/50'
+                                    }
+                                `}
                             >
-                                {/* Drag Handle (only in edit mode) */}
+                                {/* Drag Handle (only in edit mode) - Minimalist */}
                                 {isEditing && (
-                                    <div className="widget-drag-handle absolute top-0 left-0 right-0 h-10 sm:h-12 bg-gradient-to-b from-primary/10 via-primary/5 to-transparent flex items-center justify-center cursor-grab active:cursor-grabbing z-10 rounded-t-xl transition-colors hover:from-primary/20">
-                                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-                                            <GripVertical size={14} className="text-primary" />
-                                            <span className="text-[10px] font-medium text-primary uppercase tracking-wider">Drag</span>
-                                        </div>
+                                    <div className="widget-drag-handle absolute top-0 left-0 right-0 h-6 flex items-center justify-center cursor-grab active:cursor-grabbing z-20 hover:bg-white/5 transition-colors">
+                                        <div className="w-6 h-0.5 rounded-full bg-zinc-500/30" />
                                     </div>
                                 )}
 
                                 {/* Widget Content */}
-                                <div className={`h-full ${isEditing ? 'pointer-events-none opacity-80' : ''}`}>
+                                <div className={`h-full w-full overflow-hidden ${isEditing ? 'pointer-events-none opacity-60' : ''}`}>
                                     <WidgetErrorBoundary widgetTitle={widget.name || widget.slug}>
                                         <Suspense fallback={<WidgetLoadingFallback />}>
                                             <Component
