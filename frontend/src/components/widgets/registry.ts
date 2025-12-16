@@ -53,6 +53,9 @@ const ScreensaverWidget = React.lazy(() => import('./screensaver/ScreensaverWidg
 // specialized
 const StreamerToolsWidget = React.lazy(() => import('./streamer-tools/StreamerToolsWidget'));
 
+// Premium
+const AmbianceWidget = React.lazy(() => import('./ambiance/AmbianceWidget'));
+
 
 // Games
 const Magic8BallWidget = React.lazy(() => import('./magic-8-ball/Magic8BallWidget'));
@@ -195,6 +198,18 @@ export const WIDGET_REGISTRY: Record<string, WidgetManifest> = {
         defaultSize: { w: 2, h: 4 },
         supportedSizes: [{ w: 2, h: 4 }, { w: 4, h: 4 }],
         component: AiAssistantWidget,
+    },
+    'ambiance': {
+        slug: 'ambiance',
+        name: 'Ambiance',
+        description: 'Focus sounds & noise',
+        icon: '🎧',
+        category: 'productivity',
+        tags: ['focus', 'audio', 'premium'],
+        tier: 'pro',
+        defaultSize: { w: 2, h: 3 },
+        supportedSizes: [{ w: 2, h: 3 }, { w: 2, h: 4 }],
+        component: AmbianceWidget,
     },
 
     // ═══════════════════════════════════════════════════════════════════
