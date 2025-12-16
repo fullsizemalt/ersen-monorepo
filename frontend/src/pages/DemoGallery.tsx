@@ -25,10 +25,10 @@ const DEMO_PERSONAS = PERSONA_TEMPLATES.map(t => ({
 
 const DemoGallery: React.FC = () => {
     const navigate = useNavigate();
-    const [selectedPersona, setSelectedPersona] = useState<DemoPersona | null>(null);
+    const [selectedPersona, setSelectedPersona] = useState<typeof DEMO_PERSONAS[0] | null>(null);
     const [devicePreview, setDevicePreview] = useState<'desktop' | 'tablet' | 'phone'>('desktop');
 
-    const applyLayout = (persona: DemoPersona) => {
+    const applyLayout = (persona: typeof DEMO_PERSONAS[0]) => {
         localStorage.setItem('ersen_preferred_layout', JSON.stringify({
             id: persona.id,
             widgets: persona.widgets,
