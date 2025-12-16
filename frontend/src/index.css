@@ -492,3 +492,87 @@
 .no-transition * {
     transition: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   AURORA BACKGROUND - Premium animated gradient
+   ═══════════════════════════════════════════════════════════════════ */
+
+.aurora-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.aurora-bg::before,
+.aurora-bg::after {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+    animation: aurora 20s ease-in-out infinite alternate;
+}
+
+.aurora-bg::before {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+    top: -50%;
+    left: -25%;
+    animation-delay: 0s;
+}
+
+.aurora-bg::after {
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+    bottom: -50%;
+    right: -25%;
+    animation-delay: -10s;
+}
+
+.dark .aurora-bg::before {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+}
+
+.dark .aurora-bg::after {
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+}
+
+@keyframes aurora {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+
+    33% {
+        transform: translate(10%, -10%) rotate(60deg) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-5%, 10%) rotate(120deg) scale(0.95);
+    }
+
+    100% {
+        transform: translate(5%, -5%) rotate(180deg) scale(1.05);
+    }
+}
+
+/* Widget glass enhancement */
+.widget-glass {
+    @apply backdrop-blur-md border border-white/10;
+    background: linear-gradient(135deg,
+            hsl(var(--card) / 0.8) 0%,
+            hsl(var(--card) / 0.6) 100%);
+    box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.dark .widget-glass {
+    background: linear-gradient(135deg,
+            hsl(var(--card) / 0.7) 0%,
+            hsl(var(--card) / 0.5) 100%);
+    box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
