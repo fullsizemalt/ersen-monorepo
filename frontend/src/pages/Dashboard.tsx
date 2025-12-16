@@ -10,6 +10,7 @@ import WidgetGrid from '../components/common/WidgetGrid';
 import { Skeleton } from '@/components/ui/skeleton';
 import { WIDGET_REGISTRY } from '../components/widgets/registry';
 import { ActiveWidget } from '../types/widget';
+import AmbianceControls from '../components/premium/AmbianceControls';
 
 // Demo widgets for frontend-only testing
 const DEMO_WIDGETS: ActiveWidget[] = [
@@ -355,6 +356,9 @@ const Dashboard: React.FC = () => {
                             <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-500 ring-2 ring-background" />
                         )}
                     </button>
+
+                    {/* Ambiance Controls */}
+                    <AmbianceControls onUpgradeClick={() => setShowPricing(true)} />
 
                     {user?.tier !== 'pro' && (
                         <button

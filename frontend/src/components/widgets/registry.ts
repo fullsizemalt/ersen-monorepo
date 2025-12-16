@@ -53,8 +53,7 @@ const ScreensaverWidget = React.lazy(() => import('./screensaver/ScreensaverWidg
 // specialized
 const StreamerToolsWidget = React.lazy(() => import('./streamer-tools/StreamerToolsWidget'));
 
-// Premium
-const AmbianceWidget = React.lazy(() => import('./ambiance/AmbianceWidget'));
+// Note: Ambiance is now a global background feature via AmbianceContext, not a widget
 
 
 // Games
@@ -199,18 +198,8 @@ export const WIDGET_REGISTRY: Record<string, WidgetManifest> = {
         supportedSizes: [{ w: 2, h: 4 }, { w: 4, h: 4 }],
         component: AiAssistantWidget,
     },
-    'ambiance': {
-        slug: 'ambiance',
-        name: 'Ambiance',
-        description: 'Focus sounds & noise',
-        icon: '🎧',
-        category: 'productivity',
-        tags: ['focus', 'audio', 'premium'],
-        tier: 'pro',
-        defaultSize: { w: 2, h: 3 },
-        supportedSizes: [{ w: 2, h: 3 }, { w: 2, h: 4 }],
-        component: AmbianceWidget,
-    },
+    // Note: Ambiance is now a background-level feature, not a widget
+    // See AmbianceContext and AmbianceControls in /components/premium/
 
     // ═══════════════════════════════════════════════════════════════════
     // LIFESTYLE & WELLNESS
