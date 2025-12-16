@@ -458,12 +458,12 @@ export const WIDGET_REGISTRY: Record<string, WidgetManifest> = {
     // ═══════════════════════════════════════════════════════════════════
     'flip-board': {
         slug: 'flip-board',
-        name: 'Retro Board',
-        description: 'Solari style clock',
-        icon: '🗓️',
-        category: 'entertainment',
-        tags: ['aesthetic', 'time'],
+        name: 'Retro Flip-Board',
+        description: 'Solari-style departure board clock.',
         tier: 'free',
+        category: 'time',
+        tags: ['aesthetic', 'fun'],
+        icon: 'Clock',
         defaultSize: { w: 4, h: 2 },
         supportedSizes: [{ w: 4, h: 2 }, { w: 6, h: 2 }],
         component: FlipBoardWidget,
