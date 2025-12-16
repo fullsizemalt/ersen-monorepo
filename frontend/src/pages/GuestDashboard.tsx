@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, LayoutTemplate, Github, LogIn } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Sparkles, LayoutTemplate } from 'lucide-react';
 import WidgetGrid from '../components/common/WidgetGrid';
 import { ActiveWidget } from '../types/widget';
-import api from '../services/api'; // Needed for auth/login redirection URL if we do it here
 
 // Curated Hero Widgets
 const HERO_WIDGETS: ActiveWidget[] = [
@@ -29,7 +28,7 @@ const PERSONAS = [
 const GuestDashboard: React.FC = () => {
     const navigate = useNavigate();
     const [personaIndex, setPersonaIndex] = useState(0);
-    const [widgets, setWidgets] = useState<ActiveWidget[]>(HERO_WIDGETS);
+    const [widgets] = useState<ActiveWidget[]>(HERO_WIDGETS);
     const [isScrolled, setIsScrolled] = useState(false);
 
     // Cycle persona text
