@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { WidgetProps } from '../../../types/widget';
-import { RotateCcw, CheckCircle2, SearchX } from 'lucide-react';
+import { RotateCcw, CheckCircle2 } from 'lucide-react';
 import './FlashCardsWidget.css'; // We'll need a tiny bit of CSS for the flip
 
 interface FlashCard {

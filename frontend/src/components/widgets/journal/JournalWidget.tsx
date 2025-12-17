@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { WidgetProps } from '../../../types/widget';
-import { ChevronLeft, ChevronRight, Save, Calendar as CalIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Save } from 'lucide-react';
 import clsx from 'clsx';
 import PremiumGate from '../../premium/PremiumGate';
 

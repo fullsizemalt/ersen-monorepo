@@ -29,7 +29,10 @@ export type WidgetTag =
     | 'productivity'
     | 'mobile'
     | 'audio'
-    | 'premium';
+    | 'premium'
+    | 'personal'
+    | 'creative'
+    | 'learning';
 
 export interface WidgetConfig {
     [key: string]: any;

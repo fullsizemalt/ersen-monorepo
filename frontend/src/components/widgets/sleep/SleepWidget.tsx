@@ -1,7 +1,7 @@
 import React from 'react';
 import { WidgetProps } from '../../../types/widget';
-import { Moon, AlarmClock } from 'lucide-react';
-import { ResponsiveContainer, BarChart, Bar, Cell, Tooltip } from 'recharts';
+import { Moon } from 'lucide-react';
+import { ResponsiveContainer, BarChart, Bar, Cell } from 'recharts';
 
 const MOCK_SLEEP_DATA = [
     { time: '22:00', stage: 0 }, // Awake

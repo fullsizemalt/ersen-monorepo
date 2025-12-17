@@ -497,6 +497,30 @@ export const WIDGET_REGISTRY: Record<string, WidgetManifest> = {
         supportedSizes: [{ w: 2, h: 2 }],
         component: TicTacToeWidget,
     },
+    'snake': {
+        slug: 'snake',
+        name: 'Snake',
+        description: 'Classic snake game',
+        icon: '🐍',
+        category: 'entertainment',
+        tags: ['fun', 'games'],
+        tier: 'free',
+        defaultSize: { w: 2, h: 2 },
+        supportedSizes: [{ w: 2, h: 2 }],
+        component: SnakeWidget,
+    },
+    'minesweeper': {
+        slug: 'minesweeper',
+        name: 'Minesweeper',
+        description: 'Classic puzzle game',
+        icon: '💣',
+        category: 'entertainment',
+        tags: ['fun', 'games'],
+        tier: 'free',
+        defaultSize: { w: 2, h: 2 },
+        supportedSizes: [{ w: 2, h: 2 }],
+        component: MinesweeperWidget,
+    },
 
     // ═══════════════════════════════════════════════════════════════════
     // INFORMATION
