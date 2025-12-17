@@ -8,7 +8,9 @@ export type WidgetCategory =
     | 'entertainment' // Games, dice, toybox
     | 'information'   // Weather, quotes, news
     | 'integrations'  // Spotify, GitHub, Gmail, Obsidian
-    | 'monitoring';   // System info, Grafana, Prometheus
+    | 'monitoring'    // System info, Grafana, Prometheus
+    | 'health'        // Fitness and wellness tracking
+    | 'social';       // Social feeds and connections
 
 export type WidgetTag =
     | 'fun'
@@ -73,4 +75,6 @@ export const WIDGET_CATEGORIES: Record<WidgetCategory, { label: string; icon: st
     information: { label: 'Information', icon: '📰', description: 'Weather, news, and quotes' },
     integrations: { label: 'Integrations', icon: '🔗', description: 'Third-party services' },
     monitoring: { label: 'Monitoring', icon: '📊', description: 'System and service stats' },
+    health: { label: 'Health', icon: '❤️', description: 'Fitness and wellness tracking' },
+    social: { label: 'Social', icon: '💬', description: 'Social feeds and connections' },
 };

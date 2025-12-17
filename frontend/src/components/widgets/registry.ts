@@ -64,7 +64,6 @@ const Magic8BallWidget = React.lazy(() => import('./magic-8-ball/Magic8BallWidge
 const CoinFlipWidget = React.lazy(() => import('./coin-flip/CoinFlipWidget'));
 const TicTacToeWidget = React.lazy(() => import('./tic-tac-toe/TicTacToeWidget'));
 const SnakeWidget = React.lazy(() => import('./snake/SnakeWidget'));
-const SnakeWidget = React.lazy(() => import('./snake/SnakeWidget'));
 const MinesweeperWidget = React.lazy(() => import('./minesweeper/MinesweeperWidget'));
 const TraktWidget = React.lazy(() => import('./trakt/TraktWidget'));
 const LetterboxdWidget = React.lazy(() => import('./letterboxd/LetterboxdWidget'));

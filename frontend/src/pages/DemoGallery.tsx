@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-    Server, ChefHat, Briefcase, GraduationCap, Code, Heart,
     Play, Sparkles, ArrowRight, Monitor, Smartphone, Tablet,
     Check, Clock, Zap
 } from 'lucide-react';
